@@ -278,7 +278,7 @@ pub fn get_checks() -> Vec<Check> {
         Check::new(
             "spelling.neccessary",
             "Misspelling: should be 'necessary'.",
-            r"necc?ess?ary",
+            r"neccessary|neccesary|necesary",
         )
         .raw()
         .with_severity(Severity::Error)
@@ -343,7 +343,7 @@ pub fn get_checks() -> Vec<Check> {
         Check::new(
             "spelling.succesful",
             "Misspelling: 'succesful' should be 'successful'.",
-            r"succ?ess?ful",
+            r"succesful|sucesful|sucessful",
         )
         .raw()
         .with_severity(Severity::Error)
