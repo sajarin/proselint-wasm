@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proselint WASM Demo</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        textarea { width: 100%; height: 200px; font-size: 14px; padding: 10px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px 0; }
+        .results { margin-top: 20px; }
+        .issue { padding: 10px; margin: 5px 0; border-radius: 4px; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .suggestion { background: #cff4fc; border-left: 4px solid #0dcaf0; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .meta { font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Proselint WASM Demo</h1>
+    <p>A full Rust/WASM port of proselint for client-side prose linting.</p>
+
+    <textarea id="input" placeholder="Enter your text here...">At the end of the day, I think this is very good writing. I literally died laughing when I read it... The free gift was an added bonus!</textarea>
+
+    <button onclick="lintText()">Lint Text</button>
+
+    <div id="results" class="results"></div>
+
+    <script type="module">
+        import init, { Proselint, lint } from './pkg/proselint_wasm.js';
+
+        let proselint;
+
+        async function initialize() {
+            await init();
+            proselint = new Proselint();
+            console.log('Proselint WASM loaded, version:', Proselint.version());
+            console.log('Available checks:', JSON.parse(Proselint.available_checks()).length);
+        }
+
+        window.lintText = function() {
+            const input = document.getElementById('input').value;
+            const resultsDiv = document.getElementById('results');
+
+            const start = performance.now();
+            const resultsJson = proselint.lint(input);
+            const elapsed = performance.now() - start;
+
+            const results = JSON.parse(resultsJson);
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = `<p>No issues found! (${elapsed.toFixed(2)}ms)</p>`;
+                return;
+            }
+
+            let html = `<p>Found ${results.length} issue(s) in ${elapsed.toFixed(2)}ms:</p>`;
+
+            for (const issue of results) {
+                html += `
+                    <div class="issue ${issue.severity}">
+                        <strong>${issue.check}</strong><br>
+                        ${issue.message}
+                        <div class="meta">Line ${issue.line}, Column ${issue.column}</div>
+                        ${issue.replacement ? `<div class="meta">Suggestion: "${issue.replacement}"</div>` : ''}
+                    </div>
+                `;
+            }
+
+            resultsDiv.innerHTML = html;
+        };
+
+        initialize();
+    </script>
+</body>
+</html>
