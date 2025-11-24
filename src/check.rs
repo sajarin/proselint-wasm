@@ -3,8 +3,42 @@
 //! Defines the Check trait and common check types.
 
 use regex::Regex;
+use std::collections::HashMap;
 use std::fmt;
 use std::str::FromStr;
+use std::sync::{Arc, OnceLock, RwLock};
+
+// Global regex cache for patterns that can't use OnceLock (dynamic patterns)
+static REGEX_CACHE: OnceLock<RwLock<HashMap<String, Arc<Regex>>>> = OnceLock::new();
+
+fn get_cache() -> &'static RwLock<HashMap<String, Arc<Regex>>> {
+    REGEX_CACHE.get_or_init(|| RwLock::new(HashMap::new()))
+}
+
+/// Get or compile a regex from the cache (for dynamic patterns only)
+pub fn get_cached_regex(pattern: &str) -> Option<Arc<Regex>> {
+    let cache = get_cache();
+
+    // Try to read from cache first
+    {
+        if let Ok(cache_read) = cache.read() {
+            if let Some(re) = cache_read.get(pattern) {
+                return Some(Arc::clone(re));
+            }
+        }
+    }
+
+    // Compile and cache
+    if let Ok(re) = Regex::new(pattern) {
+        let arc_re = Arc::new(re);
+        if let Ok(mut cache_write) = cache.write() {
+            cache_write.insert(pattern.to_string(), Arc::clone(&arc_re));
+        }
+        Some(arc_re)
+    } else {
+        None
+    }
+}
 
 /// Severity levels for lint results
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -58,7 +92,7 @@ impl Default for Severity {
     }
 }
 
-/// A single check definition
+/// A single check definition with lazy-compiled regex
 pub struct Check {
     /// Unique identifier (e.g., "typography.symbols.ellipsis")
     pub id: &'static str,
@@ -74,9 +108,8 @@ pub struct Check {
     pub replacement: Option<&'static str>,
     /// Whether to use raw pattern (no word boundaries)
     pub raw_pattern: bool,
-    /// Compiled regex (lazily initialized)
-    #[doc(hidden)]
-    pub compiled: Option<Regex>,
+    /// Compiled regex - initialized ONCE per Check, not per call
+    compiled_regex: OnceLock<Option<Regex>>,
 }
 
 impl Check {
@@ -94,7 +127,7 @@ impl Check {
             allow_quotes: false,
             replacement: None,
             raw_pattern: false,
-            compiled: None,
+            compiled_regex: OnceLock::new(),
         }
     }
 
@@ -122,28 +155,29 @@ impl Check {
         self
     }
 
-    /// Get or compile the regex pattern
-    pub fn regex(&self) -> Option<Regex> {
-        let pattern = if self.raw_pattern {
-            // Use pattern as-is (for symbols, punctuation)
-            format!(r"(?i){}", self.pattern)
-        } else {
-            // Wrap pattern with word boundaries (for words/phrases)
-            format!(r"(?i)\b{}\b", self.pattern)
-        };
-        Regex::new(&pattern).ok()
+    /// Get the compiled regex - computed ONCE per Check lifetime
+    /// No allocations after first call!
+    #[inline]
+    pub fn get_regex(&self) -> Option<&Regex> {
+        self.compiled_regex.get_or_init(|| {
+            let pattern = if self.raw_pattern {
+                format!(r"(?i){}", self.pattern)
+            } else {
+                format!(r"(?i)\b{}\b", self.pattern)
+            };
+            Regex::new(&pattern).ok()
+        }).as_ref()
     }
 
     /// Run this check on text and return matches
+    /// After warm-up, this does ZERO allocations for pattern/regex lookup
+    #[inline]
     pub fn run(&self, text: &str) -> Vec<(usize, usize, Option<String>)> {
         let mut results = Vec::new();
 
-        if let Some(re) = self.regex() {
+        if let Some(re) = self.get_regex() {
             for mat in re.find_iter(text) {
-                let replacement = self.replacement.map(|r| {
-                    // Simple replacement (no capture group handling for now)
-                    r.to_string()
-                });
+                let replacement = self.replacement.map(|r| r.to_string());
                 results.push((mat.start(), mat.end(), replacement));
             }
         }
@@ -163,7 +197,7 @@ pub struct ExistenceCheck {
 }
 
 impl ExistenceCheck {
-    /// Run this check on text
+    /// Run this check on text (with cached regexes)
     pub fn run(&self, text: &str) -> Vec<(usize, usize, Option<String>)> {
         let mut results = Vec::new();
 
@@ -180,11 +214,11 @@ impl ExistenceCheck {
                 continue;
             }
 
-            // Build word-boundary regex
+            // Build word-boundary regex (cached in global cache)
             let escaped = regex::escape(pattern);
             let re_pattern = format!(r"(?i)\b{}\b", escaped);
 
-            if let Ok(re) = Regex::new(&re_pattern) {
+            if let Some(re) = get_cached_regex(&re_pattern) {
                 for mat in re.find_iter(text) {
                     results.push((mat.start(), mat.end(), None));
                 }
@@ -206,12 +240,15 @@ pub struct PairCheck {
 }
 
 impl PairCheck {
-    /// Run this check on text
+    /// Run this check on text (with cached regexes)
     pub fn run(&self, text: &str) -> Vec<(usize, usize, Option<String>)> {
         let mut results = Vec::new();
 
-        let first_re = Regex::new(&format!(r"(?i)\b{}\b", regex::escape(self.first))).ok();
-        let second_re = Regex::new(&format!(r"(?i)\b{}\b", regex::escape(self.second))).ok();
+        let first_pattern = format!(r"(?i)\b{}\b", regex::escape(self.first));
+        let second_pattern = format!(r"(?i)\b{}\b", regex::escape(self.second));
+
+        let first_re = get_cached_regex(&first_pattern);
+        let second_re = get_cached_regex(&second_pattern);
 
         if let (Some(first_re), Some(second_re)) = (first_re, second_re) {
             let first_matches: Vec<_> = first_re.find_iter(text).collect();
@@ -247,6 +284,10 @@ mod tests {
 
         let results = check.run("This is very good.");
         assert_eq!(results.len(), 1);
+
+        // Second call should be instant (regex already compiled)
+        let results2 = check.run("This is very very good.");
+        assert_eq!(results2.len(), 2);
     }
 
     #[test]

@@ -248,6 +248,24 @@ impl Proselint {
         engine::lint_text(text, &self.config).len()
     }
 
+    /// Lint multiple texts in a single call and return results as JSON array of arrays
+    /// Input: JSON array of strings (texts to lint)
+    /// Output: JSON array of arrays (results for each text)
+    #[wasm_bindgen]
+    pub fn lint_batch(&self, texts_json: &str) -> String {
+        let texts: Vec<String> = match serde_json::from_str(texts_json) {
+            Ok(t) => t,
+            Err(_) => return "[]".to_string(),
+        };
+
+        let results: Vec<Vec<LintResult>> = texts
+            .iter()
+            .map(|text| engine::lint_text(text, &self.config))
+            .collect();
+
+        serde_json::to_string(&results).unwrap_or_else(|_| "[]".to_string())
+    }
+
     /// Get the version of proselint-wasm
     #[wasm_bindgen]
     pub fn version() -> String {
@@ -258,6 +276,13 @@ impl Proselint {
     #[wasm_bindgen]
     pub fn available_checks() -> String {
         serde_json::to_string(&checks::get_all_check_ids()).unwrap_or_else(|_| "[]".to_string())
+    }
+
+    /// Pre-compile ALL regexes for maximum performance
+    /// Call this once during initialization to pay the compilation cost upfront
+    #[wasm_bindgen]
+    pub fn warm_all(&self) -> usize {
+        engine::warm_all_checks()
     }
 }
 

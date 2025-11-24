@@ -30,8 +30,18 @@ pub mod preferred_forms;
 
 use crate::check::Check;
 
-/// Get all registered checks
-pub fn get_all_checks() -> Vec<Check> {
+// Cache the checks vector so we don't recreate it on every lint call
+static ALL_CHECKS: once_cell::sync::Lazy<Vec<Check>> = once_cell::sync::Lazy::new(|| {
+    build_all_checks()
+});
+
+/// Get all registered checks (cached)
+pub fn get_all_checks() -> &'static [Check] {
+    &ALL_CHECKS
+}
+
+/// Build all checks (called once during initialization)
+fn build_all_checks() -> Vec<Check> {
     let mut checks = Vec::new();
 
     // Typography checks
@@ -118,9 +128,9 @@ pub fn get_all_check_ids() -> Vec<&'static str> {
 }
 
 /// Get checks by category
-pub fn get_checks_by_category(category: &str) -> Vec<Check> {
+pub fn get_checks_by_category(category: &str) -> Vec<&'static Check> {
     get_all_checks()
-        .into_iter()
+        .iter()
         .filter(|c| c.id.starts_with(category))
         .collect()
 }
