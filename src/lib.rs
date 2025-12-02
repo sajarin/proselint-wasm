@@ -27,24 +27,31 @@
 //! const results = JSON.parse(linter.lint("This is very very important."));
 //! ```
 
-use wasm_bindgen::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::fmt;
+use wasm_bindgen::prelude::*;
 
-mod engine;
-mod position;
+/// Maximum allowed text size for linting (10 MB)
+/// Prevents excessive memory usage and potential DoS
+pub const MAX_TEXT_SIZE: usize = 10 * 1024 * 1024;
+
+/// Maximum allowed batch size for lint_batch
+pub const MAX_BATCH_SIZE: usize = 100;
+
 mod check;
 mod checks;
 mod config;
+mod engine;
+mod position;
 
 // Re-export core types
-pub use engine::*;
-pub use position::*;
 pub use check::*;
 pub use config::*;
+pub use engine::*;
+pub use position::*;
 
 // Re-export check registry functions for native Rust users
-pub use checks::{get_all_checks, get_all_check_ids, get_checks_by_category};
+pub use checks::{get_all_check_ids, get_all_checks, get_checks_by_category, validate_all_checks};
 
 /// A single lint result representing a detected issue
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -156,17 +163,26 @@ impl Linter {
 
     /// Check text and return only errors
     pub fn check_errors(&self, text: &str) -> Vec<LintResult> {
-        self.check(text).into_iter().filter(|r| r.is_error()).collect()
+        self.check(text)
+            .into_iter()
+            .filter(|r| r.is_error())
+            .collect()
     }
 
     /// Check text and return only warnings and errors
     pub fn check_warnings(&self, text: &str) -> Vec<LintResult> {
-        self.check(text).into_iter().filter(|r| !r.is_suggestion()).collect()
+        self.check(text)
+            .into_iter()
+            .filter(|r| !r.is_suggestion())
+            .collect()
     }
 
     /// Check text and return results for a specific category
     pub fn check_category(&self, text: &str, category: &str) -> Vec<LintResult> {
-        self.check(text).into_iter().filter(|r| r.category() == category).collect()
+        self.check(text)
+            .into_iter()
+            .filter(|r| r.category() == category)
+            .collect()
     }
 
     /// Returns true if the text has any issues
@@ -197,6 +213,60 @@ impl Linter {
     /// Get the library version
     pub fn version() -> &'static str {
         env!("CARGO_PKG_VERSION")
+    }
+
+    /// Check multiple texts in parallel (requires `parallel` feature)
+    ///
+    /// This method uses rayon for parallel processing, which can significantly
+    /// improve performance when linting many texts.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "parallel")]
+    /// # {
+    /// use proselint_wasm::Linter;
+    ///
+    /// let linter = Linter::new();
+    /// let texts = vec!["Text 1", "Text 2", "Text 3"];
+    /// let results = linter.check_parallel(&texts);
+    /// # }
+    /// ```
+    #[cfg(feature = "parallel")]
+    pub fn check_parallel(&self, texts: &[&str]) -> Vec<Vec<LintResult>> {
+        use rayon::prelude::*;
+
+        texts.par_iter().map(|text| self.check(text)).collect()
+    }
+
+    /// Check multiple texts in parallel with a custom thread pool
+    ///
+    /// This allows fine-grained control over the number of threads used.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "parallel")]
+    /// # {
+    /// use proselint_wasm::Linter;
+    /// use rayon::ThreadPoolBuilder;
+    ///
+    /// let linter = Linter::new();
+    /// let pool = ThreadPoolBuilder::new().num_threads(4).build().unwrap();
+    /// let texts = vec!["Text 1", "Text 2", "Text 3"];
+    ///
+    /// let results = linter.check_parallel_with_pool(&pool, &texts);
+    /// # }
+    /// ```
+    #[cfg(feature = "parallel")]
+    pub fn check_parallel_with_pool(
+        &self,
+        pool: &rayon::ThreadPool,
+        texts: &[&str],
+    ) -> Vec<Vec<LintResult>> {
+        use rayon::prelude::*;
+
+        pool.install(|| texts.par_iter().map(|text| self.check(text)).collect())
     }
 }
 
@@ -236,10 +306,23 @@ impl Proselint {
     }
 
     /// Lint the provided text and return results as JSON
+    /// Returns a JSON array of lint results, or a JSON object with an "error" field if something goes wrong
     #[wasm_bindgen]
     pub fn lint(&self, text: &str) -> String {
+        // Validate text size
+        if text.len() > MAX_TEXT_SIZE {
+            return format!(
+                r#"{{"error": "Text too large: {} bytes (max {} bytes)"}}"#,
+                text.len(),
+                MAX_TEXT_SIZE
+            );
+        }
+
         let results = engine::lint_text(text, &self.config);
-        serde_json::to_string(&results).unwrap_or_else(|_| "[]".to_string())
+        serde_json::to_string(&results).unwrap_or_else(|e| {
+            // Return error as JSON object instead of empty array
+            format!(r#"{{"error": "Failed to serialize results: {}"}}"#, e)
+        })
     }
 
     /// Lint the provided text and return the number of issues found
@@ -250,20 +333,44 @@ impl Proselint {
 
     /// Lint multiple texts in a single call and return results as JSON array of arrays
     /// Input: JSON array of strings (texts to lint)
-    /// Output: JSON array of arrays (results for each text)
+    /// Output: JSON array of arrays (results for each text), or JSON object with "error" field
     #[wasm_bindgen]
     pub fn lint_batch(&self, texts_json: &str) -> String {
         let texts: Vec<String> = match serde_json::from_str(texts_json) {
             Ok(t) => t,
-            Err(_) => return "[]".to_string(),
+            Err(e) => {
+                return format!(r#"{{"error": "Failed to parse input JSON: {}"}}"#, e);
+            }
         };
+
+        // Validate batch size
+        if texts.len() > MAX_BATCH_SIZE {
+            return format!(
+                r#"{{"error": "Batch too large: {} texts (max {} texts)"}}"#,
+                texts.len(),
+                MAX_BATCH_SIZE
+            );
+        }
+
+        // Validate individual text sizes
+        for (idx, text) in texts.iter().enumerate() {
+            if text.len() > MAX_TEXT_SIZE {
+                return format!(
+                    r#"{{"error": "Text {} too large: {} bytes (max {} bytes)"}}"#,
+                    idx,
+                    text.len(),
+                    MAX_TEXT_SIZE
+                );
+            }
+        }
 
         let results: Vec<Vec<LintResult>> = texts
             .iter()
             .map(|text| engine::lint_text(text, &self.config))
             .collect();
 
-        serde_json::to_string(&results).unwrap_or_else(|_| "[]".to_string())
+        serde_json::to_string(&results)
+            .unwrap_or_else(|e| format!(r#"{{"error": "Failed to serialize results: {}"}}"#, e))
     }
 
     /// Get the version of proselint-wasm
@@ -308,5 +415,80 @@ mod tests {
         let proselint = Proselint::new();
         let results = proselint.lint("This is very very bad.");
         assert!(!results.is_empty());
+    }
+
+    #[cfg(test)]
+    mod property_tests {
+        use super::*;
+        use quickcheck_macros::quickcheck;
+
+        #[quickcheck]
+        fn prop_lint_never_panics(text: String) -> bool {
+            let linter = Linter::new();
+            // Should never panic regardless of input
+            let _results = linter.check(&text);
+            true
+        }
+
+        #[quickcheck]
+        fn prop_lint_respects_max_size(text: String) -> bool {
+            let proselint = Proselint::new();
+
+            // Create oversized text if needed
+            let large_text = if text.len() > MAX_TEXT_SIZE {
+                text
+            } else {
+                "x".repeat(MAX_TEXT_SIZE + 1)
+            };
+
+            let result = proselint.lint(&large_text);
+
+            // Should return error, not results
+            result.contains("error") && result.contains("too large")
+        }
+
+        #[quickcheck]
+        fn prop_lint_results_valid_positions(text: String) -> bool {
+            let linter = Linter::new();
+            let results = linter.check(&text);
+
+            for result in results {
+                // Positions must be within text bounds
+                if result.start > text.len() || result.end > text.len() {
+                    return false;
+                }
+
+                // Start must be before end
+                if result.start > result.end {
+                    return false;
+                }
+
+                // Line and column must be at least 1
+                if result.line < 1 || result.column < 1 {
+                    return false;
+                }
+            }
+
+            true
+        }
+
+        #[quickcheck]
+        fn prop_config_disable_reduces_results(text: String) -> bool {
+            if text.len() < 10 {
+                return true; // Discard short texts
+            }
+
+            let linter_all = Linter::new();
+            let results_all = linter_all.check(&text);
+
+            let mut config = Config::default();
+            config.disable("weasel_words");
+
+            let linter_filtered = Linter::with_config(config);
+            let results_filtered = linter_filtered.check(&text);
+
+            // Filtered should have <= results than all enabled
+            results_filtered.len() <= results_all.len()
+        }
     }
 }

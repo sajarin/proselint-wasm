@@ -8,12 +8,43 @@ use crate::check::{Check, Severity};
 pub fn get_checks() -> Vec<Check> {
     // Words that cannot be compared (absolute adjectives)
     let uncomparables = [
-        "absolute", "adequate", "chief", "complete", "correct", "devoid",
-        "entire", "false", "fatal", "favorite", "final", "ideal", "impossible",
-        "inevitable", "infinite", "irrevocable", "main", "manifest", "only",
-        "paramount", "perfect", "perpetual", "possible", "preferable", "principal",
-        "singular", "stationary", "sufficient", "true", "unanimous", "unavoidable",
-        "unbroken", "uniform", "unique", "universal", "void", "whole"
+        "absolute",
+        "adequate",
+        "chief",
+        "complete",
+        "correct",
+        "devoid",
+        "entire",
+        "false",
+        "fatal",
+        "favorite",
+        "final",
+        "ideal",
+        "impossible",
+        "inevitable",
+        "infinite",
+        "irrevocable",
+        "main",
+        "manifest",
+        "only",
+        "paramount",
+        "perfect",
+        "perpetual",
+        "possible",
+        "preferable",
+        "principal",
+        "singular",
+        "stationary",
+        "sufficient",
+        "true",
+        "unanimous",
+        "unavoidable",
+        "unbroken",
+        "uniform",
+        "unique",
+        "universal",
+        "void",
+        "whole",
     ];
 
     // Comparators that shouldn't be used with uncomparables
@@ -53,7 +84,7 @@ pub fn get_checks() -> Vec<Check> {
                     Box::leak(pattern.into_boxed_str()),
                 )
                 .raw()
-                .with_severity(Severity::Warning)
+                .with_severity(Severity::Warning),
             );
         }
     }
@@ -66,7 +97,7 @@ pub fn get_checks() -> Vec<Check> {
             r"very unique",
         )
         .with_severity(Severity::Warning)
-        .with_replacement("unique")
+        .with_replacement("unique"),
     );
 
     checks.push(
@@ -76,7 +107,7 @@ pub fn get_checks() -> Vec<Check> {
             r"most unique",
         )
         .with_severity(Severity::Warning)
-        .with_replacement("unique")
+        .with_replacement("unique"),
     );
 
     checks.push(
@@ -86,7 +117,7 @@ pub fn get_checks() -> Vec<Check> {
             r"completely unique",
         )
         .with_severity(Severity::Warning)
-        .with_replacement("unique")
+        .with_replacement("unique"),
     );
 
     checks.push(
@@ -96,7 +127,7 @@ pub fn get_checks() -> Vec<Check> {
             r"totally unique",
         )
         .with_severity(Severity::Warning)
-        .with_replacement("unique")
+        .with_replacement("unique"),
     );
 
     checks.push(
@@ -106,7 +137,7 @@ pub fn get_checks() -> Vec<Check> {
             r"very perfect",
         )
         .with_severity(Severity::Warning)
-        .with_replacement("perfect")
+        .with_replacement("perfect"),
     );
 
     checks.push(
@@ -116,7 +147,7 @@ pub fn get_checks() -> Vec<Check> {
             r"more infinite",
         )
         .with_severity(Severity::Warning)
-        .with_replacement("infinite")
+        .with_replacement("infinite"),
     );
 
     checks.push(
@@ -126,7 +157,7 @@ pub fn get_checks() -> Vec<Check> {
             r"very impossible",
         )
         .with_severity(Severity::Warning)
-        .with_replacement("impossible")
+        .with_replacement("impossible"),
     );
 
     checks.push(
@@ -135,7 +166,7 @@ pub fn get_checks() -> Vec<Check> {
             "'complete' is absolute. Consider 'more nearly complete' if needed.",
             r"more complete",
         )
-        .with_severity(Severity::Suggestion)
+        .with_severity(Severity::Suggestion),
     );
 
     checks.push(
@@ -144,7 +175,7 @@ pub fn get_checks() -> Vec<Check> {
             "'true' is absolute - something is either true or false.",
             r"very true",
         )
-        .with_severity(Severity::Suggestion)
+        .with_severity(Severity::Suggestion),
     );
 
     checks.push(
@@ -153,7 +184,7 @@ pub fn get_checks() -> Vec<Check> {
             "'equal' is absolute. Consider 'more nearly equal' if needed.",
             r"more equal",
         )
-        .with_severity(Severity::Suggestion)
+        .with_severity(Severity::Suggestion),
     );
 
     checks
@@ -166,7 +197,10 @@ mod tests {
     #[test]
     fn test_very_unique() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "uncomparables.very_unique").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "uncomparables.very_unique")
+            .unwrap();
         let results = check.run("This is very unique.");
         assert_eq!(results.len(), 1);
     }

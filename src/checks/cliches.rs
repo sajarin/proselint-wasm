@@ -18,7 +18,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("now"),
-
         Check::new(
             "cliches.due_to_the_fact",
             "'Due to the fact that' is wordy. Use 'because'.",
@@ -26,7 +25,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("because"),
-
         Check::new(
             "cliches.in_order_to",
             "'In order to' is often wordy. 'To' is usually sufficient.",
@@ -34,7 +32,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("to"),
-
         Check::new(
             "cliches.point_in_time",
             "'Point in time' is usually redundant. Use 'time' or be more specific.",
@@ -117,11 +114,14 @@ pub fn get_checks() -> Vec<Check> {
     ];
 
     for (i, phrase) in garner_cliches.iter().enumerate() {
-        checks.push(Check::new(
-            Box::leak(format!("cliches.garner.{}", i).into_boxed_str()),
-            Box::leak(format!("'{}' is a cliche.", phrase).into_boxed_str()),
-            phrase,
-        ).with_severity(Severity::Suggestion));
+        checks.push(
+            Check::new(
+                Box::leak(format!("cliches.garner.{}", i).into_boxed_str()),
+                Box::leak(format!("'{}' is a cliche.", phrase).into_boxed_str()),
+                phrase,
+            )
+            .with_severity(Severity::Suggestion),
+        );
     }
 
     // write-good cliches (extensive list)
@@ -639,11 +639,14 @@ pub fn get_checks() -> Vec<Check> {
     ];
 
     for (i, phrase) in write_good_cliches.iter().enumerate() {
-        checks.push(Check::new(
-            Box::leak(format!("cliches.write_good.{}", i).into_boxed_str()),
-            Box::leak(format!("'{}' is a cliche.", phrase).into_boxed_str()),
-            phrase,
-        ).with_severity(Severity::Suggestion));
+        checks.push(
+            Check::new(
+                Box::leak(format!("cliches.write_good.{}", i).into_boxed_str()),
+                Box::leak(format!("'{}' is a cliche.", phrase).into_boxed_str()),
+                phrase,
+            )
+            .with_severity(Severity::Suggestion),
+        );
     }
 
     // GNU diction cliches
@@ -672,11 +675,14 @@ pub fn get_checks() -> Vec<Check> {
     ];
 
     for (i, phrase) in diction_cliches.iter().enumerate() {
-        checks.push(Check::new(
-            Box::leak(format!("cliches.diction.{}", i).into_boxed_str()),
-            Box::leak(format!("'{}' is a cliche.", phrase).into_boxed_str()),
-            phrase,
-        ).with_severity(Severity::Suggestion));
+        checks.push(
+            Check::new(
+                Box::leak(format!("cliches.diction.{}", i).into_boxed_str()),
+                Box::leak(format!("'{}' is a cliche.", phrase).into_boxed_str()),
+                phrase,
+            )
+            .with_severity(Severity::Suggestion),
+        );
     }
 
     // Corporate/business cliches
@@ -714,11 +720,14 @@ pub fn get_checks() -> Vec<Check> {
     ];
 
     for (i, phrase) in corporate_cliches.iter().enumerate() {
-        checks.push(Check::new(
-            Box::leak(format!("cliches.corporate.{}", i).into_boxed_str()),
-            Box::leak(format!("'{}' is corporate jargon/cliche.", phrase).into_boxed_str()),
-            phrase,
-        ).with_severity(Severity::Suggestion));
+        checks.push(
+            Check::new(
+                Box::leak(format!("cliches.corporate.{}", i).into_boxed_str()),
+                Box::leak(format!("'{}' is corporate jargon/cliche.", phrase).into_boxed_str()),
+                phrase,
+            )
+            .with_severity(Severity::Suggestion),
+        );
     }
 
     checks
@@ -739,7 +748,10 @@ mod tests {
     #[test]
     fn test_in_order_to() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "cliches.in_order_to").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "cliches.in_order_to")
+            .unwrap();
         let results = check.run("We need to do this in order to succeed.");
         assert_eq!(results.len(), 1);
     }

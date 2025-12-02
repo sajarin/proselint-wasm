@@ -14,7 +14,6 @@ pub fn get_checks() -> Vec<Check> {
             r"I think",
         )
         .with_severity(Severity::Suggestion),
-
         // "I believe"
         Check::new(
             "hedging.i_believe",
@@ -22,7 +21,6 @@ pub fn get_checks() -> Vec<Check> {
             r"I believe",
         )
         .with_severity(Severity::Suggestion),
-
         // "I feel"
         Check::new(
             "hedging.i_feel",
@@ -30,7 +28,6 @@ pub fn get_checks() -> Vec<Check> {
             r"I feel",
         )
         .with_severity(Severity::Suggestion),
-
         // "It seems"
         Check::new(
             "hedging.seems",
@@ -38,7 +35,6 @@ pub fn get_checks() -> Vec<Check> {
             r"it seems",
         )
         .with_severity(Severity::Suggestion),
-
         // "Appears to be"
         Check::new(
             "hedging.appears",
@@ -46,7 +42,6 @@ pub fn get_checks() -> Vec<Check> {
             r"appears to be",
         )
         .with_severity(Severity::Suggestion),
-
         // "In my opinion"
         Check::new(
             "hedging.in_my_opinion",
@@ -54,7 +49,6 @@ pub fn get_checks() -> Vec<Check> {
             r"in my opinion",
         )
         .with_severity(Severity::Suggestion),
-
         // "To be honest"
         Check::new(
             "hedging.to_be_honest",
@@ -62,7 +56,6 @@ pub fn get_checks() -> Vec<Check> {
             r"to be honest",
         )
         .with_severity(Severity::Warning),
-
         // "Sort of"
         Check::new(
             "hedging.sort_of",
@@ -70,7 +63,6 @@ pub fn get_checks() -> Vec<Check> {
             r"sort of",
         )
         .with_severity(Severity::Warning),
-
         // "Kind of"
         Check::new(
             "hedging.kind_of",
@@ -78,7 +70,6 @@ pub fn get_checks() -> Vec<Check> {
             r"kind of",
         )
         .with_severity(Severity::Warning),
-
         // "More or less"
         Check::new(
             "hedging.more_or_less",
@@ -86,7 +77,6 @@ pub fn get_checks() -> Vec<Check> {
             r"more or less",
         )
         .with_severity(Severity::Warning),
-
         // "Could possibly"
         Check::new(
             "hedging.could_possibly",
@@ -94,7 +84,6 @@ pub fn get_checks() -> Vec<Check> {
             r"could possibly",
         )
         .with_severity(Severity::Warning),
-
         // "Might be able to"
         Check::new(
             "hedging.might_be_able",
@@ -121,7 +110,10 @@ mod tests {
     #[test]
     fn test_to_be_honest_check() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "hedging.to_be_honest").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "hedging.to_be_honest")
+            .unwrap();
 
         let results = check.run("To be honest, I didn't like the movie.");
         assert_eq!(results.len(), 1);

@@ -409,7 +409,10 @@ mod tests {
     #[test]
     fn test_synergy() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "industrial_language.synergy").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "industrial_language.synergy")
+            .unwrap();
         let results = check.run("We need more synergy between teams.");
         assert_eq!(results.len(), 1);
     }
@@ -417,7 +420,10 @@ mod tests {
     #[test]
     fn test_circle_back() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "industrial_language.circle_back").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "industrial_language.circle_back")
+            .unwrap();
         let results = check.run("Let's circle back on this next week.");
         assert_eq!(results.len(), 1);
     }

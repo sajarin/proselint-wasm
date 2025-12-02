@@ -42,10 +42,12 @@ pub fn get_cached_regex(pattern: &str) -> Option<Arc<Regex>> {
 
 /// Severity levels for lint results
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Default)]
 pub enum Severity {
     /// Suggestions are optional style improvements
     Suggestion,
     /// Warnings indicate likely issues that should be addressed
+    #[default]
     Warning,
     /// Errors are definite problems that must be fixed
     Error,
@@ -86,11 +88,6 @@ impl FromStr for Severity {
     }
 }
 
-impl Default for Severity {
-    fn default() -> Self {
-        Severity::Warning
-    }
-}
 
 /// A single check definition with lazy-compiled regex
 pub struct Check {
@@ -114,11 +111,7 @@ pub struct Check {
 
 impl Check {
     /// Create a new check with default settings
-    pub const fn new(
-        id: &'static str,
-        message: &'static str,
-        pattern: &'static str,
-    ) -> Self {
+    pub const fn new(id: &'static str, message: &'static str, pattern: &'static str) -> Self {
         Self {
             id,
             message,
@@ -157,16 +150,47 @@ impl Check {
 
     /// Get the compiled regex - computed ONCE per Check lifetime
     /// No allocations after first call!
+    ///
+    /// Returns None if the regex pattern is invalid. Check `validate_regex()` for details.
     #[inline]
     pub fn get_regex(&self) -> Option<&Regex> {
-        self.compiled_regex.get_or_init(|| {
-            let pattern = if self.raw_pattern {
-                format!(r"(?i){}", self.pattern)
-            } else {
-                format!(r"(?i)\b{}\b", self.pattern)
-            };
-            Regex::new(&pattern).ok()
-        }).as_ref()
+        self.compiled_regex
+            .get_or_init(|| {
+                let pattern = if self.raw_pattern {
+                    format!(r"(?i){}", self.pattern)
+                } else {
+                    format!(r"(?i)\b{}\b", self.pattern)
+                };
+                match Regex::new(&pattern) {
+                    Ok(re) => Some(re),
+                    Err(e) => {
+                        // Log regex compilation errors to stderr for debugging
+                        eprintln!(
+                            "WARNING: Failed to compile regex for check '{}': {}\nPattern: {}",
+                            self.id, e, pattern
+                        );
+                        None
+                    }
+                }
+            })
+            .as_ref()
+    }
+
+    /// Validate that this check's regex pattern compiles successfully
+    /// Returns Ok(()) if valid, or Err with error message if invalid
+    pub fn validate_regex(&self) -> Result<(), String> {
+        let pattern = if self.raw_pattern {
+            format!(r"(?i){}", self.pattern)
+        } else {
+            format!(r"(?i)\b{}\b", self.pattern)
+        };
+
+        Regex::new(&pattern).map(|_| ()).map_err(|e| {
+            format!(
+                "Check '{}' has invalid regex pattern: {}\nPattern: {}",
+                self.id, e, pattern
+            )
+        })
     }
 
     /// Run this check on text and return matches
@@ -276,11 +300,7 @@ mod tests {
 
     #[test]
     fn test_simple_check() {
-        let check = Check::new(
-            "test.very",
-            "Consider removing 'very'",
-            r"very",
-        );
+        let check = Check::new("test.very", "Consider removing 'very'", r"very");
 
         let results = check.run("This is very good.");
         assert_eq!(results.len(), 1);

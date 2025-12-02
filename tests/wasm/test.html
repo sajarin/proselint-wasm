@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>proselint-wasm Browser Tests</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #333; }
+        .test-result {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-radius: 4px;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 proselint-wasm Browser Tests</h1>
+    <div id="output"></div>
+
+    <script type="module">
+        // Import WASM module (requires: wasm-pack build --target web)
+        import init, { Proselint } from '../../pkg/proselint_wasm.js';
+
+        const output = document.getElementById('output');
+        let passed = 0;
+        let failed = 0;
+
+        function log(message, isPass = null) {
+            const div = document.createElement('div');
+            if (isPass !== null) {
+                div.className = `test-result ${isPass ? 'pass' : 'fail'}`;
+                div.textContent = `${isPass ? '✅' : '❌'} ${message}`;
+                if (isPass) passed++; else failed++;
+            } else {
+                div.innerHTML = message;
+            }
+            output.appendChild(div);
+        }
+
+        async function runTests() {
+            try {
+                // Initialize WASM
+                await init();
+                log('<h2>📦 Initialization</h2>');
+                log('WASM module loaded successfully', true);
+
+                // Create instance
+                const proselint = new Proselint();
+                log('Proselint instance created', true);
+
+                log('<h2>📦 Basic Linting</h2>');
+
+                // Test basic linting
+                const results = JSON.parse(proselint.lint('This is very very important.'));
+                log('Basic lint works', Array.isArray(results));
+                log('Detects weasel words', results.length > 0);
+
+                // Test UTF-8
+                log('<h2>📦 UTF-8 Support</h2>');
+                const emojiResults = JSON.parse(proselint.lint('This is very 👋 important.'));
+                log('Handles emoji', emojiResults.length > 0);
+
+                const accentResults = JSON.parse(proselint.lint('Café is very élégant.'));
+                log('Handles accented characters', accentResults.length > 0);
+
+                const cjkResults = JSON.parse(proselint.lint('This is very 日本語 text.'));
+                log('Handles CJK characters', cjkResults.length > 0);
+
+                // Test error handling
+                log('<h2>📦 Error Handling</h2>');
+                const largeText = 'x'.repeat(11 * 1024 * 1024);
+                const largeResult = JSON.parse(proselint.lint(largeText));
+                log('Rejects oversized text', 'error' in largeResult);
+
+                // Test batch linting
+                log('<h2>📦 Batch Linting</h2>');
+                const batchInput = JSON.stringify(['This is very bad.', 'Really quite good.']);
+                const batchResult = JSON.parse(proselint.lint_batch(batchInput));
+                log('Batch linting works', Array.isArray(batchResult) && batchResult.length === 2);
+
+                // Test utilities
+                log('<h2>📦 Utility Methods</h2>');
+                const count = proselint.lint_count('This is very very bad.');
+                log('lint_count works', typeof count === 'number' && count > 0);
+
+                const version = Proselint.version();
+                log('version() works', typeof version === 'string' && version.length > 0);
+
+                const checks = JSON.parse(Proselint.available_checks());
+                log('available_checks() works', Array.isArray(checks) && checks.length > 0);
+
+                // Test warm_all
+                const warmCount = proselint.warm_all();
+                log('warm_all() works', typeof warmCount === 'number' && warmCount > 0);
+
+                // Summary
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'summary';
+                summaryDiv.innerHTML = `
+                    <h2>📊 Test Summary</h2>
+                    <p><strong>Passed:</strong> ${passed}</p>
+                    <p><strong>Failed:</strong> ${failed}</p>
+                    <p><strong>Success Rate:</strong> ${((passed / (passed + failed)) * 100).toFixed(1)}%</p>
+                `;
+                output.appendChild(summaryDiv);
+
+            } catch (error) {
+                log(`<div class="fail">💥 Fatal error: ${error.message}</div>`);
+                console.error(error);
+            }
+        }
+
+        runTests();
+    </script>
+</body>
+</html>

@@ -190,7 +190,10 @@ mod tests {
     #[test]
     fn test_mixed_metaphor() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "mixed_metaphors.cross_that_bridge").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "mixed_metaphors.cross_that_bridge")
+            .unwrap();
         let results = check.run("We'll burn that bridge when we come to it.");
         assert_eq!(results.len(), 1);
     }

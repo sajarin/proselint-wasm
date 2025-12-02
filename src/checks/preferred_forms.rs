@@ -11,9 +11,16 @@ pub fn get_checks() -> Vec<Check> {
     // Preferred forms - non-standard vs preferred usage
     let preferred_forms: &[(&str, &str, &str)] = &[
         // a/an with silent h
-        (r"\ba historic\b", "Use 'a' before words that start with a pronounced 'h'.", "a historic"),
-        (r"\ban historic\b", "Use 'a' before words that start with a pronounced 'h'.", "a historic"),
-
+        (
+            r"\ba historic\b",
+            "Use 'a' before words that start with a pronounced 'h'.",
+            "a historic",
+        ),
+        (
+            r"\ban historic\b",
+            "Use 'a' before words that start with a pronounced 'h'.",
+            "a historic",
+        ),
         // Commonly confused/misused words
         ("firstly", "Use 'first' instead of 'firstly'.", "first"),
         ("secondly", "Use 'second' instead of 'secondly'.", "second"),
@@ -30,75 +37,307 @@ pub fn get_checks() -> Vec<Check> {
         ("leapt", "In American English, use 'leaped'.", "leaped"),
         ("towards", "In American English, use 'toward'.", "toward"),
         ("forwards", "In American English, use 'forward'.", "forward"),
-        ("backwards", "In American English, use 'backward'.", "backward"),
-        ("afterwards", "In American English, use 'afterward'.", "afterward"),
+        (
+            "backwards",
+            "In American English, use 'backward'.",
+            "backward",
+        ),
+        (
+            "afterwards",
+            "In American English, use 'afterward'.",
+            "afterward",
+        ),
         ("anyways", "Use 'anyway' instead of 'anyways'.", "anyway"),
-        ("irregardless", "Use 'regardless' instead of 'irregardless'.", "regardless"),
-        ("supposably", "Use 'supposedly' instead of 'supposably'.", "supposedly"),
-        ("alright", "Use 'all right' instead of 'alright'.", "all right"),
-        ("preventative", "Use 'preventive' instead of 'preventative'.", "preventive"),
-        ("orientate", "Use 'orient' instead of 'orientate'.", "orient"),
-        ("commentate", "Use 'comment' instead of 'commentate'.", "comment"),
-        ("administrate", "Use 'administer' instead of 'administrate'.", "administer"),
-        ("conversate", "Use 'converse' instead of 'conversate'.", "converse"),
-        ("supposively", "Use 'supposedly' instead of 'supposively'.", "supposedly"),
+        (
+            "irregardless",
+            "Use 'regardless' instead of 'irregardless'.",
+            "regardless",
+        ),
+        (
+            "supposably",
+            "Use 'supposedly' instead of 'supposably'.",
+            "supposedly",
+        ),
+        (
+            "alright",
+            "Use 'all right' instead of 'alright'.",
+            "all right",
+        ),
+        (
+            "preventative",
+            "Use 'preventive' instead of 'preventative'.",
+            "preventive",
+        ),
+        (
+            "orientate",
+            "Use 'orient' instead of 'orientate'.",
+            "orient",
+        ),
+        (
+            "commentate",
+            "Use 'comment' instead of 'commentate'.",
+            "comment",
+        ),
+        (
+            "administrate",
+            "Use 'administer' instead of 'administrate'.",
+            "administer",
+        ),
+        (
+            "conversate",
+            "Use 'converse' instead of 'conversate'.",
+            "converse",
+        ),
+        (
+            "supposively",
+            "Use 'supposedly' instead of 'supposively'.",
+            "supposedly",
+        ),
         ("expresso", "The correct term is 'espresso'.", "espresso"),
         ("et cetera", "'Etc.' is preferred in most contexts.", "etc."),
         ("etcetera", "'Etc.' is preferred.", "etc."),
         ("per say", "The correct phrase is 'per se'.", "per se"),
-        ("for all intensive purposes", "The correct phrase is 'for all intents and purposes'.", "for all intents and purposes"),
-        ("all of the sudden", "The correct phrase is 'all of a sudden'.", "all of a sudden"),
-        ("all of a sudden", "Consider whether this phrase is necessary.", "suddenly"),
-        ("one in the same", "The correct phrase is 'one and the same'.", "one and the same"),
-        ("by in large", "The correct phrase is 'by and large'.", "by and large"),
-        ("case and point", "The correct phrase is 'case in point'.", "case in point"),
-        ("statue of limitations", "The correct phrase is 'statute of limitations'.", "statute of limitations"),
-        ("escape goat", "The correct phrase is 'scapegoat'.", "scapegoat"),
-        ("biting my time", "The correct phrase is 'biding my time'.", "biding my time"),
-        ("old wise tale", "The correct phrase is 'old wives' tale'.", "old wives' tale"),
-        ("extract revenge", "The correct phrase is 'exact revenge'.", "exact revenge"),
-        ("self-depreciating", "The correct term is 'self-deprecating'.", "self-deprecating"),
-        ("deep seeded", "The correct phrase is 'deep-seated'.", "deep-seated"),
-        ("peaked my interest", "The correct phrase is 'piqued my interest'.", "piqued my interest"),
-        ("sneak peak", "The correct phrase is 'sneak peek'.", "sneak peek"),
-        ("slight of hand", "The correct phrase is 'sleight of hand'.", "sleight of hand"),
-        ("wet your appetite", "The correct phrase is 'whet your appetite'.", "whet your appetite"),
+        (
+            "for all intensive purposes",
+            "The correct phrase is 'for all intents and purposes'.",
+            "for all intents and purposes",
+        ),
+        (
+            "all of the sudden",
+            "The correct phrase is 'all of a sudden'.",
+            "all of a sudden",
+        ),
+        (
+            "all of a sudden",
+            "Consider whether this phrase is necessary.",
+            "suddenly",
+        ),
+        (
+            "one in the same",
+            "The correct phrase is 'one and the same'.",
+            "one and the same",
+        ),
+        (
+            "by in large",
+            "The correct phrase is 'by and large'.",
+            "by and large",
+        ),
+        (
+            "case and point",
+            "The correct phrase is 'case in point'.",
+            "case in point",
+        ),
+        (
+            "statue of limitations",
+            "The correct phrase is 'statute of limitations'.",
+            "statute of limitations",
+        ),
+        (
+            "escape goat",
+            "The correct phrase is 'scapegoat'.",
+            "scapegoat",
+        ),
+        (
+            "biting my time",
+            "The correct phrase is 'biding my time'.",
+            "biding my time",
+        ),
+        (
+            "old wise tale",
+            "The correct phrase is 'old wives' tale'.",
+            "old wives' tale",
+        ),
+        (
+            "extract revenge",
+            "The correct phrase is 'exact revenge'.",
+            "exact revenge",
+        ),
+        (
+            "self-depreciating",
+            "The correct term is 'self-deprecating'.",
+            "self-deprecating",
+        ),
+        (
+            "deep seeded",
+            "The correct phrase is 'deep-seated'.",
+            "deep-seated",
+        ),
+        (
+            "peaked my interest",
+            "The correct phrase is 'piqued my interest'.",
+            "piqued my interest",
+        ),
+        (
+            "sneak peak",
+            "The correct phrase is 'sneak peek'.",
+            "sneak peek",
+        ),
+        (
+            "slight of hand",
+            "The correct phrase is 'sleight of hand'.",
+            "sleight of hand",
+        ),
+        (
+            "wet your appetite",
+            "The correct phrase is 'whet your appetite'.",
+            "whet your appetite",
+        ),
         ("shoe-in", "The correct term is 'shoo-in'.", "shoo-in"),
-        ("baited breath", "The correct phrase is 'bated breath'.", "bated breath"),
-        ("phase out", "The correct phrase is 'faze out' (to disturb).", "faze"),
+        (
+            "baited breath",
+            "The correct phrase is 'bated breath'.",
+            "bated breath",
+        ),
+        (
+            "phase out",
+            "The correct phrase is 'faze out' (to disturb).",
+            "faze",
+        ),
         ("hone in", "The correct phrase is 'home in'.", "home in"),
-        ("tow the line", "The correct phrase is 'toe the line'.", "toe the line"),
-        ("free reign", "The correct phrase is 'free rein'.", "free rein"),
+        (
+            "tow the line",
+            "The correct phrase is 'toe the line'.",
+            "toe the line",
+        ),
+        (
+            "free reign",
+            "The correct phrase is 'free rein'.",
+            "free rein",
+        ),
         ("reign in", "The correct phrase is 'rein in'.", "rein in"),
-        ("beckon call", "The correct phrase is 'beck and call'.", "beck and call"),
-        ("hunger pains", "The correct phrase is 'hunger pangs'.", "hunger pangs"),
-        ("butt naked", "The original phrase is 'buck naked'.", "buck naked"),
-        ("chalk full", "The correct phrase is 'chock-full'.", "chock-full"),
-        ("chock full", "Consider using 'chock-full' (hyphenated).", "chock-full"),
-        ("on accident", "The correct phrase is 'by accident'.", "by accident"),
-        ("different than", "Use 'different from' in formal writing.", "different from"),
-        ("center around", "Use 'center on' or 'revolve around'.", "center on"),
+        (
+            "beckon call",
+            "The correct phrase is 'beck and call'.",
+            "beck and call",
+        ),
+        (
+            "hunger pains",
+            "The correct phrase is 'hunger pangs'.",
+            "hunger pangs",
+        ),
+        (
+            "butt naked",
+            "The original phrase is 'buck naked'.",
+            "buck naked",
+        ),
+        (
+            "chalk full",
+            "The correct phrase is 'chock-full'.",
+            "chock-full",
+        ),
+        (
+            "chock full",
+            "Consider using 'chock-full' (hyphenated).",
+            "chock-full",
+        ),
+        (
+            "on accident",
+            "The correct phrase is 'by accident'.",
+            "by accident",
+        ),
+        (
+            "different than",
+            "Use 'different from' in formal writing.",
+            "different from",
+        ),
+        (
+            "center around",
+            "Use 'center on' or 'revolve around'.",
+            "center on",
+        ),
         ("try and", "Use 'try to' instead of 'try and'.", "try to"),
-        ("could care less", "The correct phrase is 'couldn't care less'.", "couldn't care less"),
-        ("should of", "Use 'should have' instead of 'should of'.", "should have"),
-        ("would of", "Use 'would have' instead of 'would of'.", "would have"),
-        ("could of", "Use 'could have' instead of 'could of'.", "could have"),
-        ("must of", "Use 'must have' instead of 'must of'.", "must have"),
-        ("might of", "Use 'might have' instead of 'might of'.", "might have"),
-        ("a criteria", "Use 'a criterion' (criteria is plural).", "a criterion"),
-        ("a phenomena", "Use 'a phenomenon' (phenomena is plural).", "a phenomenon"),
+        (
+            "could care less",
+            "The correct phrase is 'couldn't care less'.",
+            "couldn't care less",
+        ),
+        (
+            "should of",
+            "Use 'should have' instead of 'should of'.",
+            "should have",
+        ),
+        (
+            "would of",
+            "Use 'would have' instead of 'would of'.",
+            "would have",
+        ),
+        (
+            "could of",
+            "Use 'could have' instead of 'could of'.",
+            "could have",
+        ),
+        (
+            "must of",
+            "Use 'must have' instead of 'must of'.",
+            "must have",
+        ),
+        (
+            "might of",
+            "Use 'might have' instead of 'might of'.",
+            "might have",
+        ),
+        (
+            "a criteria",
+            "Use 'a criterion' (criteria is plural).",
+            "a criterion",
+        ),
+        (
+            "a phenomena",
+            "Use 'a phenomenon' (phenomena is plural).",
+            "a phenomenon",
+        ),
         ("a media", "Use 'a medium' (media is plural).", "a medium"),
-        ("a bacteria", "Use 'a bacterium' (bacteria is plural).", "a bacterium"),
-        ("a data", "While controversial, 'datum' is the traditional singular.", "a datum"),
-        ("less people", "Use 'fewer people' for countable nouns.", "fewer people"),
-        ("less things", "Use 'fewer things' for countable nouns.", "fewer things"),
-        ("less items", "Use 'fewer items' for countable nouns.", "fewer items"),
-        ("10 items or less", "Use 'fewer' for countable nouns.", "10 items or fewer"),
-        ("amount of people", "Use 'number of people' for countable nouns.", "number of people"),
-        ("between you and I", "Use 'between you and me'.", "between you and me"),
-        ("give it to John and I", "Use 'John and me' as the object.", "John and me"),
+        (
+            "a bacteria",
+            "Use 'a bacterium' (bacteria is plural).",
+            "a bacterium",
+        ),
+        (
+            "a data",
+            "While controversial, 'datum' is the traditional singular.",
+            "a datum",
+        ),
+        (
+            "less people",
+            "Use 'fewer people' for countable nouns.",
+            "fewer people",
+        ),
+        (
+            "less things",
+            "Use 'fewer things' for countable nouns.",
+            "fewer things",
+        ),
+        (
+            "less items",
+            "Use 'fewer items' for countable nouns.",
+            "fewer items",
+        ),
+        (
+            "10 items or less",
+            "Use 'fewer' for countable nouns.",
+            "10 items or fewer",
+        ),
+        (
+            "amount of people",
+            "Use 'number of people' for countable nouns.",
+            "number of people",
+        ),
+        (
+            "between you and I",
+            "Use 'between you and me'.",
+            "between you and me",
+        ),
+        (
+            "give it to John and I",
+            "Use 'John and me' as the object.",
+            "John and me",
+        ),
         ("for you and I", "Use 'for you and me'.", "for you and me"),
-        ("literally", "Reserve 'literally' for things that actually happened.", ""),
+        (
+            "literally",
+            "Reserve 'literally' for things that actually happened.",
+            "",
+        ),
     ];
 
     for (i, (pattern, message, replacement)) in preferred_forms.iter().enumerate() {
@@ -278,7 +517,10 @@ mod tests {
     fn test_preferred_form() {
         let checks = get_checks();
         // "utilize" is at index 5 in preferred_forms array
-        let check = checks.iter().find(|c| c.id == "preferred_forms.usage.5").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "preferred_forms.usage.5")
+            .unwrap();
         let results = check.run("We need to utilize this tool.");
         assert_eq!(results.len(), 1);
     }
@@ -286,7 +528,10 @@ mod tests {
     #[test]
     fn test_phrasal_adjective() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "preferred_forms.hyphenation.0").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "preferred_forms.hyphenation.0")
+            .unwrap();
         let results = check.run("This is a high quality product.");
         assert_eq!(results.len(), 1);
     }

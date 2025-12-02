@@ -16,7 +16,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("going to"),
-
         Check::new(
             "restricted.wanna",
             "'wanna' is informal. Use 'want to'.",
@@ -25,7 +24,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("want to"),
-
         Check::new(
             "restricted.gotta",
             "'gotta' is informal. Use 'got to' or 'have to'.",
@@ -34,7 +32,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("have to"),
-
         Check::new(
             "restricted.kinda",
             "'kinda' is informal. Use 'kind of'.",
@@ -43,7 +40,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("kind of"),
-
         Check::new(
             "restricted.sorta",
             "'sorta' is informal. Use 'sort of'.",
@@ -52,7 +48,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("sort of"),
-
         Check::new(
             "restricted.dunno",
             "'dunno' is informal. Use 'don't know'.",
@@ -61,7 +56,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("don't know"),
-
         Check::new(
             "restricted.lemme",
             "'lemme' is informal. Use 'let me'.",
@@ -70,7 +64,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("let me"),
-
         Check::new(
             "restricted.gimme",
             "'gimme' is informal. Use 'give me'.",
@@ -79,7 +72,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("give me"),
-
         Check::new(
             "restricted.aint",
             "'ain't' is nonstandard. Use 'isn't', 'aren't', or 'haven't'.",
@@ -87,7 +79,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         Check::new(
             "restricted.coulda",
             "'coulda' is informal. Use 'could have'.",
@@ -96,7 +87,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("could have"),
-
         Check::new(
             "restricted.shoulda",
             "'shoulda' is informal. Use 'should have'.",
@@ -105,7 +95,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("should have"),
-
         Check::new(
             "restricted.woulda",
             "'woulda' is informal. Use 'would have'.",
@@ -114,16 +103,10 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("would have"),
-
-        Check::new(
-            "restricted.ya",
-            "'ya' is informal. Use 'you'.",
-            r"\bya\b",
-        )
-        .raw()
-        .with_severity(Severity::Suggestion)
-        .with_replacement("you"),
-
+        Check::new("restricted.ya", "'ya' is informal. Use 'you'.", r"\bya\b")
+            .raw()
+            .with_severity(Severity::Suggestion)
+            .with_replacement("you"),
         Check::new(
             "restricted.yall",
             "'y'all' or 'yall' is regional/informal. Consider 'you all' or 'everyone'.",
@@ -131,7 +114,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "restricted.cuz",
             "'cuz' or 'cos' is informal. Use 'because'.",
@@ -140,7 +122,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("because"),
-
         Check::new(
             "restricted.tho",
             "'tho' is informal. Use 'though'.",
@@ -149,7 +130,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("though"),
-
         Check::new(
             "restricted.thru",
             "'thru' is informal. Use 'through'.",
@@ -158,7 +138,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("through"),
-
         Check::new(
             "restricted.nite",
             "'nite' is informal. Use 'night'.",
@@ -167,7 +146,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("night"),
-
         Check::new(
             "restricted.lite",
             "'lite' is informal/commercial. Use 'light'.",
@@ -176,7 +154,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Suggestion)
         .with_replacement("light"),
-
         // Profanity and crude language markers
         Check::new(
             "restricted.expletive_damn",
@@ -185,7 +162,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "restricted.expletive_hell",
             "Expletive 'hell' may be inappropriate in formal writing.",
@@ -193,7 +169,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "restricted.crap",
             "'crap' may be inappropriate in formal writing.",
@@ -201,7 +176,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "restricted.suck",
             "'sucks' or 'sucked' may be inappropriate in formal writing.",
@@ -209,7 +183,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         // Text speak
         Check::new(
             "restricted.lol",
@@ -218,7 +191,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         Check::new(
             "restricted.omg",
             "'OMG' is text speak. Avoid in formal writing.",
@@ -226,7 +198,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         Check::new(
             "restricted.btw",
             "'BTW' is text speak. Use 'by the way'.",
@@ -235,7 +206,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("by the way"),
-
         Check::new(
             "restricted.fyi",
             "'FYI' is informal. Consider 'for your information'.",
@@ -244,7 +214,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Suggestion)
         .with_replacement("for your information"),
-
         Check::new(
             "restricted.imho",
             "'IMHO' is text speak. Use 'in my opinion'.",
@@ -253,7 +222,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("in my opinion"),
-
         Check::new(
             "restricted.asap",
             "'ASAP' is informal. Consider 'as soon as possible'.",

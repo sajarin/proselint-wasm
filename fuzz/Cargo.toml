@@ -1,0 +1,26 @@
+[package]
+name = "proselint-wasm-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.proselint-wasm]
+path = ".."
+
+[[bin]]
+name = "fuzz_linter"
+path = "fuzz_targets/fuzz_linter.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "fuzz_regex"
+path = "fuzz_targets/fuzz_regex.rs"
+test = false
+doc = false

@@ -410,7 +410,10 @@ mod tests {
     #[test]
     fn test_mankind() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "social_awareness.mankind").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "social_awareness.mankind")
+            .unwrap();
         let results = check.run("This is a great achievement for mankind.");
         assert_eq!(results.len(), 1);
     }
@@ -418,7 +421,10 @@ mod tests {
     #[test]
     fn test_fireman() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "social_awareness.fireman").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "social_awareness.fireman")
+            .unwrap();
         let results = check.run("The fireman saved the cat.");
         assert_eq!(results.len(), 1);
     }

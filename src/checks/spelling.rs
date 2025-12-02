@@ -24,7 +24,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("averse to"),
-
         Check::new(
             "spelling.affect_effect",
             "Check: 'affect' is usually a verb; 'effect' is usually a noun.",
@@ -32,7 +31,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("the effect"),
-
         Check::new(
             "spelling.allude_elude",
             "Check: 'allude' means to reference; 'elude' means to escape.",
@@ -40,7 +38,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("allude to"),
-
         Check::new(
             "spelling.amoral_immoral",
             "Check: 'amoral' means without morals; 'immoral' means against morals.",
@@ -48,7 +45,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("amoral"),
-
         Check::new(
             "spelling.assure_ensure_insure",
             "'insure' is for insurance. Use 'ensure' for making certain.",
@@ -56,7 +52,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("ensure that"),
-
         Check::new(
             "spelling.complement_compliment",
             "'complement' means to complete; 'compliment' means praise.",
@@ -65,7 +60,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("complement"),
-
         Check::new(
             "spelling.discreet_discrete",
             "'discreet' means careful/prudent; 'discrete' means separate/distinct.",
@@ -74,7 +68,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("discreet"),
-
         Check::new(
             "spelling.elicit_illicit",
             "'elicit' means to draw out; 'illicit' means illegal.",
@@ -83,7 +76,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("elicit"),
-
         Check::new(
             "spelling.eminent_imminent",
             "'eminent' means distinguished; 'imminent' means about to happen.",
@@ -92,7 +84,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("imminently"),
-
         Check::new(
             "spelling.flair_flare",
             "'flair' is a talent; 'flare' is a bright light or widening.",
@@ -100,7 +91,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("flair for"),
-
         Check::new(
             "spelling.flaunt_flout",
             "'flaunt' means to show off; 'flout' means to disobey.",
@@ -109,7 +99,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("flout the"),
-
         Check::new(
             "spelling.gorilla_guerrilla",
             "'gorilla' is an ape; 'guerrilla' is a fighter.",
@@ -118,7 +107,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("guerrilla"),
-
         Check::new(
             "spelling.lead_led",
             "'lead' (rhymes with 'bed') is a metal. Past tense of 'lead' (verb) is 'led'.",
@@ -126,7 +114,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "spelling.loose_lose",
             "'loose' means not tight; 'lose' means to misplace.",
@@ -135,7 +122,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("lose"),
-
         Check::new(
             "spelling.peak_peek_pique",
             "'peak' is a summit; 'peek' is a glance; 'pique' is to stimulate.",
@@ -143,7 +129,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("pique interest"),
-
         Check::new(
             "spelling.principal_principle",
             "'principal' means main/chief or school head; 'principle' is a rule/belief.",
@@ -152,7 +137,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("principle"),
-
         Check::new(
             "spelling.stationary_stationery",
             "'stationary' means not moving; 'stationery' is writing materials.",
@@ -161,7 +145,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("stationery"),
-
         Check::new(
             "spelling.than_then",
             "Use 'than' for comparison; 'then' for time sequence.",
@@ -170,7 +153,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("than"),
-
         Check::new(
             "spelling.their_there_theyre",
             "Common confusion: 'their' (possessive), 'there' (place), 'they're' (they are).",
@@ -178,7 +160,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         Check::new(
             "spelling.whose_whos",
             "'whose' is possessive; 'who's' is 'who is' or 'who has'.",
@@ -187,7 +168,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Warning)
         .with_replacement("whose"),
-
         // Common misspellings
         Check::new(
             "spelling.accomodate",
@@ -197,7 +177,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("accommodate"),
-
         Check::new(
             "spelling.arguement",
             "Misspelling: 'arguement' should be 'argument'.",
@@ -205,7 +184,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("argument"),
-
         Check::new(
             "spelling.beleive",
             "Misspelling: 'beleive' should be 'believe'.",
@@ -214,7 +192,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("believe"),
-
         Check::new(
             "spelling.calender",
             "Misspelling: 'calender' should be 'calendar'.",
@@ -222,7 +199,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("calendar"),
-
         Check::new(
             "spelling.definately",
             "Misspelling: 'definately' should be 'definitely'.",
@@ -230,7 +206,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("definitely"),
-
         Check::new(
             "spelling.embarass",
             "Misspelling: 'embarass' should be 'embarrass'.",
@@ -239,7 +214,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("embarrass"),
-
         Check::new(
             "spelling.occured",
             "Misspelling: 'occured' should be 'occurred'.",
@@ -247,7 +221,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("occurred"),
-
         Check::new(
             "spelling.recieve",
             "Misspelling: 'recieve' should be 'receive'.",
@@ -256,7 +229,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("receive"),
-
         Check::new(
             "spelling.seperate",
             "Misspelling: 'seperate' should be 'separate'.",
@@ -265,7 +237,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("separate"),
-
         Check::new(
             "spelling.wierd",
             "Misspelling: 'wierd' should be 'weird'.",
@@ -273,7 +244,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("weird"),
-
         // More common misspellings
         Check::new(
             "spelling.neccessary",
@@ -283,7 +253,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("necessary"),
-
         Check::new(
             "spelling.concensus",
             "Misspelling: 'concensus' should be 'consensus'.",
@@ -291,7 +260,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("consensus"),
-
         Check::new(
             "spelling.persue",
             "Misspelling: 'persue' should be 'pursue'.",
@@ -299,7 +267,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("pursue"),
-
         Check::new(
             "spelling.priviledge",
             "Misspelling: 'priviledge' should be 'privilege'.",
@@ -307,7 +274,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("privilege"),
-
         Check::new(
             "spelling.pronounciation",
             "Misspelling: 'pronounciation' should be 'pronunciation'.",
@@ -315,7 +281,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("pronunciation"),
-
         Check::new(
             "spelling.publically",
             "Misspelling: 'publically' should be 'publicly'.",
@@ -323,7 +288,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("publicly"),
-
         Check::new(
             "spelling.questionaire",
             "Misspelling: 'questionaire' should be 'questionnaire'.",
@@ -331,7 +295,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("questionnaire"),
-
         Check::new(
             "spelling.refering",
             "Misspelling: 'refering' should be 'referring'.",
@@ -339,7 +302,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("referring"),
-
         Check::new(
             "spelling.succesful",
             "Misspelling: 'succesful' should be 'successful'.",
@@ -348,7 +310,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("successful"),
-
         Check::new(
             "spelling.untill",
             "Misspelling: 'untill' should be 'until'.",
@@ -356,7 +317,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("until"),
-
         Check::new(
             "spelling.writting",
             "Misspelling: 'writting' should be 'writing'.",
@@ -364,7 +324,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("writing"),
-
         Check::new(
             "spelling.begining",
             "Misspelling: 'begining' should be 'beginning'.",
@@ -372,7 +331,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("beginning"),
-
         Check::new(
             "spelling.bizzare",
             "Misspelling: 'bizzare' should be 'bizarre'.",
@@ -380,7 +338,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("bizarre"),
-
         Check::new(
             "spelling.carribean",
             "Misspelling: 'Carribean' should be 'Caribbean'.",
@@ -389,7 +346,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("Caribbean"),
-
         Check::new(
             "spelling.collegue",
             "Misspelling: 'collegue' should be 'colleague'.",
@@ -397,7 +353,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("colleague"),
-
         Check::new(
             "spelling.commitee",
             "Misspelling: 'commitee' should be 'committee'.",
@@ -406,7 +361,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("committee"),
-
         Check::new(
             "spelling.concious",
             "Misspelling: 'concious' should be 'conscious'.",
@@ -414,7 +368,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("conscious"),
-
         Check::new(
             "spelling.enviroment",
             "Misspelling: 'enviroment' should be 'environment'.",
@@ -422,7 +375,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("environment"),
-
         Check::new(
             "spelling.existance",
             "Misspelling: 'existance' should be 'existence'.",
@@ -430,7 +382,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("existence"),
-
         Check::new(
             "spelling.experiance",
             "Misspelling: 'experiance' should be 'experience'.",
@@ -438,7 +389,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("experience"),
-
         Check::new(
             "spelling.fiery",
             "Misspelling: 'firey' should be 'fiery'.",
@@ -446,7 +396,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("fiery"),
-
         Check::new(
             "spelling.foriegn",
             "Misspelling: 'foriegn' should be 'foreign'.",
@@ -454,7 +403,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("foreign"),
-
         Check::new(
             "spelling.fourty",
             "Misspelling: 'fourty' should be 'forty'.",
@@ -462,7 +410,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("forty"),
-
         Check::new(
             "spelling.goverment",
             "Misspelling: 'goverment' should be 'government'.",
@@ -470,7 +417,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("government"),
-
         Check::new(
             "spelling.grammer",
             "Misspelling: 'grammer' should be 'grammar'.",
@@ -478,7 +424,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("grammar"),
-
         Check::new(
             "spelling.harrass",
             "Misspelling: 'harrass' should be 'harass'.",
@@ -486,7 +431,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("harass"),
-
         Check::new(
             "spelling.heros",
             "Misspelling: 'heros' should be 'heroes'.",
@@ -495,7 +439,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("heroes"),
-
         Check::new(
             "spelling.independant",
             "Misspelling: 'independant' should be 'independent'.",
@@ -503,7 +446,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("independent"),
-
         Check::new(
             "spelling.innoculate",
             "Misspelling: 'innoculate' should be 'inoculate'.",
@@ -511,7 +453,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("inoculate"),
-
         Check::new(
             "spelling.jewelery",
             "Misspelling: 'jewelery' should be 'jewelry' (US) or 'jewellery' (UK).",
@@ -519,7 +460,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("jewelry"),
-
         Check::new(
             "spelling.judgement_us",
             "In American English, 'judgement' is often 'judgment'.",
@@ -527,7 +467,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("judgment"),
-
         Check::new(
             "spelling.knowlege",
             "Misspelling: 'knowlege' should be 'knowledge'.",
@@ -535,7 +474,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("knowledge"),
-
         Check::new(
             "spelling.liason",
             "Misspelling: 'liason' should be 'liaison'.",
@@ -543,7 +481,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("liaison"),
-
         Check::new(
             "spelling.libary",
             "Misspelling: 'libary' should be 'library'.",
@@ -551,7 +488,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("library"),
-
         Check::new(
             "spelling.maintainance",
             "Misspelling: 'maintainance' should be 'maintenance'.",
@@ -559,7 +495,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("maintenance"),
-
         Check::new(
             "spelling.millenium",
             "Misspelling: 'millenium' should be 'millennium'.",
@@ -567,7 +502,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("millennium"),
-
         Check::new(
             "spelling.mischievious",
             "Misspelling: 'mischievious' should be 'mischievous'.",
@@ -575,7 +509,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("mischievous"),
-
         Check::new(
             "spelling.noticable",
             "Misspelling: 'noticable' should be 'noticeable'.",
@@ -583,7 +516,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("noticeable"),
-
         Check::new(
             "spelling.occassion",
             "Misspelling: 'occassion' should be 'occasion'.",
@@ -591,7 +523,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("occasion"),
-
         Check::new(
             "spelling.pastime",
             "Misspelling: 'pasttime' should be 'pastime'.",
@@ -599,7 +530,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("pastime"),
-
         Check::new(
             "spelling.perseverance",
             "Misspelling: 'perseverence' should be 'perseverance'.",
@@ -607,7 +537,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("perseverance"),
-
         Check::new(
             "spelling.pharoah",
             "Misspelling: 'pharoah' should be 'pharaoh'.",
@@ -615,7 +544,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("pharaoh"),
-
         Check::new(
             "spelling.playwright",
             "Misspelling: 'playwrite' should be 'playwright'.",
@@ -623,7 +551,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("playwright"),
-
         Check::new(
             "spelling.posession",
             "Misspelling: 'posession' should be 'possession'.",
@@ -631,7 +558,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("possession"),
-
         Check::new(
             "spelling.potatos",
             "Misspelling: 'potatos' should be 'potatoes'.",
@@ -640,7 +566,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("potatoes"),
-
         Check::new(
             "spelling.preceed",
             "Misspelling: 'preceed' should be 'precede'.",
@@ -648,7 +573,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("precede"),
-
         Check::new(
             "spelling.recommend",
             "Misspelling: 'reccommend' should be 'recommend'.",
@@ -656,7 +580,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("recommend"),
-
         Check::new(
             "spelling.restaraunt",
             "Misspelling: 'restaraunt' should be 'restaurant'.",
@@ -664,7 +587,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("restaurant"),
-
         Check::new(
             "spelling.rythm",
             "Misspelling: 'rythm' should be 'rhythm'.",
@@ -672,7 +594,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("rhythm"),
-
         Check::new(
             "spelling.sieze",
             "Misspelling: 'sieze' should be 'seize'.",
@@ -680,7 +601,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("seize"),
-
         Check::new(
             "spelling.suprise",
             "Misspelling: 'suprise' should be 'surprise'.",
@@ -688,7 +608,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("surprise"),
-
         Check::new(
             "spelling.tomatos",
             "Misspelling: 'tomatos' should be 'tomatoes'.",
@@ -697,7 +616,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("tomatoes"),
-
         Check::new(
             "spelling.tommorow",
             "Misspelling: 'tommorow' should be 'tomorrow'.",
@@ -706,7 +624,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("tomorrow"),
-
         Check::new(
             "spelling.tounge",
             "Misspelling: 'tounge' should be 'tongue'.",
@@ -714,7 +631,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("tongue"),
-
         Check::new(
             "spelling.truely",
             "Misspelling: 'truely' should be 'truly'.",
@@ -722,7 +638,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("truly"),
-
         Check::new(
             "spelling.tyrany",
             "Misspelling: 'tyrany' should be 'tyranny'.",
@@ -730,7 +645,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("tyranny"),
-
         Check::new(
             "spelling.vaccuum",
             "Misspelling: 'vaccuum' should be 'vacuum'.",
@@ -738,7 +652,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("vacuum"),
-
         Check::new(
             "spelling.vegeterian",
             "Misspelling: 'vegeterian' should be 'vegetarian'.",
@@ -746,7 +659,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("vegetarian"),
-
         Check::new(
             "spelling.villian",
             "Misspelling: 'villian' should be 'villain'.",
@@ -754,7 +666,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("villain"),
-
         Check::new(
             "spelling.wether",
             "Misspelling or confusion: 'wether' (castrated sheep) is often 'whether' or 'weather'.",
@@ -762,7 +673,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         // ve/of confusions
         Check::new(
             "spelling.ve_of.must_of",
@@ -771,7 +681,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("must have"),
-
         Check::new(
             "spelling.ve_of.might_of",
             "'might of' should be 'might have'.",
@@ -779,7 +688,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("might have"),
-
         // Athlete names commonly misspelled
         Check::new(
             "spelling.athlete.jordan",
@@ -1810,7 +1718,11 @@ pub fn get_checks() -> Vec<Check> {
         ("gray", "grey", "gray/grey"),
         ("aging", "ageing", "aging/ageing"),
         ("judgment", "judgement", "judgment/judgement"),
-        ("acknowledgment", "acknowledgement", "acknowledgment/acknowledgement"),
+        (
+            "acknowledgment",
+            "acknowledgement",
+            "acknowledgment/acknowledgement",
+        ),
         ("fulfill", "fulfil", "fulfill/fulfil"),
         ("skillful", "skilful", "skillful/skilful"),
         ("enrollment", "enrolment", "enrollment/enrolment"),
@@ -1821,7 +1733,13 @@ pub fn get_checks() -> Vec<Check> {
         checks.push(
             Check::new(
                 Box::leak(format!("spelling.consistency.us.{}", i).into_boxed_str()),
-                Box::leak(format!("'{}' is American English. Ensure consistent spelling style.", us).into_boxed_str()),
+                Box::leak(
+                    format!(
+                        "'{}' is American English. Ensure consistent spelling style.",
+                        us
+                    )
+                    .into_boxed_str(),
+                ),
                 us,
             )
             .with_severity(Severity::Suggestion),
@@ -1830,7 +1748,13 @@ pub fn get_checks() -> Vec<Check> {
         checks.push(
             Check::new(
                 Box::leak(format!("spelling.consistency.uk.{}", i).into_boxed_str()),
-                Box::leak(format!("'{}' is British English. Ensure consistent spelling style.", uk).into_boxed_str()),
+                Box::leak(
+                    format!(
+                        "'{}' is British English. Ensure consistent spelling style.",
+                        uk
+                    )
+                    .into_boxed_str(),
+                ),
                 uk,
             )
             .with_severity(Severity::Suggestion),
@@ -1847,7 +1771,10 @@ mod tests {
     #[test]
     fn test_spelling() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "spelling.definately").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "spelling.definately")
+            .unwrap();
         let results = check.run("I definately agree.");
         assert_eq!(results.len(), 1);
     }

@@ -14,7 +14,6 @@ pub fn get_checks() -> Vec<Check> {
             r"(?:was|were|been|being|is|are|am) (?:being )?(?:\w+ed|made|done|taken|given|shown)",
         )
         .with_severity(Severity::Suggestion),
-
         // Starting with "There is/are"
         Check::new(
             "misc.there_is",
@@ -22,7 +21,6 @@ pub fn get_checks() -> Vec<Check> {
             r"^There (?:is|are|was|were)",
         )
         .with_severity(Severity::Suggestion),
-
         // Double negatives
         Check::new(
             "misc.double_negative",
@@ -30,7 +28,6 @@ pub fn get_checks() -> Vec<Check> {
             r"(?:not|n't) (?:un|in|im)\w+",
         )
         .with_severity(Severity::Warning),
-
         // Sentence starting with "But"
         Check::new(
             "misc.sentence_start_but",
@@ -38,7 +35,6 @@ pub fn get_checks() -> Vec<Check> {
             r"(?:^|[.!?]\s+)But ",
         )
         .with_severity(Severity::Suggestion),
-
         // Sentence starting with "And"
         Check::new(
             "misc.sentence_start_and",
@@ -46,7 +42,6 @@ pub fn get_checks() -> Vec<Check> {
             r"(?:^|[.!?]\s+)And ",
         )
         .with_severity(Severity::Suggestion),
-
         // "A lot"
         Check::new(
             "misc.a_lot",
@@ -54,7 +49,6 @@ pub fn get_checks() -> Vec<Check> {
             r"a lot",
         )
         .with_severity(Severity::Suggestion),
-
         // "Alot" (misspelling)
         Check::new(
             "misc.alot",
@@ -63,7 +57,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("a lot"),
-
         // "Could of" (should be "could have")
         Check::new(
             "misc.could_of",
@@ -72,7 +65,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("could have"),
-
         // "Would of"
         Check::new(
             "misc.would_of",
@@ -81,7 +73,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("would have"),
-
         // "Should of"
         Check::new(
             "misc.should_of",
@@ -90,7 +81,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("should have"),
-
         // "Its" vs "It's"
         Check::new(
             "misc.its_contraction",
@@ -98,7 +88,6 @@ pub fn get_checks() -> Vec<Check> {
             r"its (?:a|an|the|been|not|going|being)",
         )
         .with_severity(Severity::Warning),
-
         // "Your" vs "You're"
         Check::new(
             "misc.your_contraction",
@@ -106,7 +95,6 @@ pub fn get_checks() -> Vec<Check> {
             r"your (?:a|an|the|not|going|being|welcome)",
         )
         .with_severity(Severity::Warning),
-
         // "Their" vs "They're" vs "There"
         Check::new(
             "misc.their_contraction",
@@ -114,7 +102,6 @@ pub fn get_checks() -> Vec<Check> {
             r"their (?:is|are|was|were|going|coming)",
         )
         .with_severity(Severity::Warning),
-
         // "Affect" vs "Effect"
         Check::new(
             "misc.affect_effect",
@@ -123,7 +110,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("the effect"),
-
         // Multiple exclamation marks
         Check::new(
             "misc.multiple_exclamation",
@@ -132,7 +118,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("!"),
-
         // Multiple question marks
         Check::new(
             "misc.multiple_question",
@@ -141,7 +126,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("?"),
-
         // Run-on sentence indicator (very long sentence)
         Check::new(
             "misc.run_on_sentence",
@@ -149,7 +133,6 @@ pub fn get_checks() -> Vec<Check> {
             r"[^.!?]{200,}[.!?]",
         )
         .with_severity(Severity::Suggestion),
-
         // Latin phrases - prefer English
         Check::new(
             "misc.latin.ceteris_paribus",
@@ -158,7 +141,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("other things being equal"),
-
         Check::new(
             "misc.latin.inter_alia",
             "Prefer among other things over the Latin inter alia.",
@@ -166,7 +148,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("among other things"),
-
         Check::new(
             "misc.latin.simpliciter",
             "Prefer simply or in itself over the Latin simpliciter.",
@@ -174,7 +155,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("simply"),
-
         Check::new(
             "misc.latin.mutatis_mutandis",
             "Prefer with the necessary changes over mutatis mutandis.",
@@ -182,21 +162,18 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("with the necessary changes"),
-
         Check::new(
             "misc.latin.ad_hoc",
             "Consider whether ad hoc could be replaced with improvised or for this purpose.",
             r"ad hoc",
         )
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.latin.de_facto",
             "Consider whether de facto could be replaced with in practice or actual.",
             r"de facto",
         )
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.latin.ergo",
             "Consider using therefore instead of ergo.",
@@ -205,7 +182,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Suggestion)
         .with_replacement("therefore"),
-
         Check::new(
             "misc.latin.qua",
             "Consider whether qua could be replaced with as or in the capacity of.",
@@ -213,7 +189,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.latin.viz",
             "Consider using namely instead of viz.",
@@ -222,7 +197,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Suggestion)
         .with_replacement("namely"),
-
         // Pretension checks
         Check::new(
             "misc.pretension.reconceptualize",
@@ -231,28 +205,24 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("rethink"),
-
         Check::new(
             "misc.pretension.demassification",
             "demassification is pretentious jargon.",
             r"demassification",
         )
         .with_severity(Severity::Warning),
-
         Check::new(
             "misc.pretension.attitudinally",
             "attitudinally is pretentious jargon.",
             r"attitudinally",
         )
         .with_severity(Severity::Warning),
-
         Check::new(
             "misc.pretension.judgmentally",
             "judgmentally is often pretentious. Consider simpler alternatives.",
             r"judgmentally",
         )
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.pretension.heretofore",
             "heretofore is pretentious. Use previously or until now.",
@@ -260,7 +230,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("previously"),
-
         Check::new(
             "misc.pretension.hitherto",
             "hitherto is pretentious. Use until now or previously.",
@@ -268,14 +237,12 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("until now"),
-
         Check::new(
             "misc.pretension.therewith",
             "therewith is pretentious. Simplify your language.",
             r"therewith",
         )
         .with_severity(Severity::Warning),
-
         Check::new(
             "misc.pretension.forthwith",
             "forthwith is pretentious. Use immediately.",
@@ -283,7 +250,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("immediately"),
-
         // Apologizing / excessive hedging in academic writing
         Check::new(
             "misc.apologizing.more_research",
@@ -292,14 +258,12 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.apologizing.beyond_scope",
             "Beyond the scope of this can be an unnecessary disclaimer.",
             r"beyond the scope of this",
         )
         .with_severity(Severity::Suggestion),
-
         // Metadiscourse
         Check::new(
             "misc.metadiscourse.this_paper",
@@ -308,7 +272,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.metadiscourse.in_this_paper",
             "Metadiscourse like in this paper can often be cut.",
@@ -316,7 +279,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         // Back formations
         Check::new(
             "misc.back_formations.enthuse",
@@ -325,7 +287,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.back_formations.liaise",
             "liaise is a back-formation. Consider work with or coordinate with.",
@@ -333,7 +294,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.back_formations.surveil",
             "surveil is a back-formation. Consider keep under surveillance or watch.",
@@ -341,7 +301,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         // False plurals
         Check::new(
             "misc.false_plurals.phenomena",
@@ -351,7 +310,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("phenomenon"),
-
         Check::new(
             "misc.false_plurals.criteria",
             "criteria is plural. Use criterion for singular.",
@@ -360,7 +318,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Error)
         .with_replacement("criterion"),
-
         Check::new(
             "misc.false_plurals.data",
             "data is technically plural, though singular usage is now accepted.",
@@ -368,7 +325,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.false_plurals.media",
             "media is plural. Use medium for singular.",
@@ -376,7 +332,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         Check::new(
             "misc.false_plurals.alumni",
             "alumni is plural. Use alumnus (male) or alumna (female) for singular.",
@@ -384,7 +339,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         // Inferior/superior usage
         Check::new(
             "misc.inferior_superior.more_superior",
@@ -393,7 +347,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("superior"),
-
         Check::new(
             "misc.inferior_superior.more_inferior",
             "more inferior is redundant. Use just inferior.",
@@ -401,14 +354,12 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("inferior"),
-
         Check::new(
             "misc.inferior_superior.most_superior",
             "most superior is redundant. Use just superior or the most.",
             r"most superior",
         )
         .with_severity(Severity::Error),
-
         // Currency
         Check::new(
             "misc.currency.redundant_dollars",
@@ -417,7 +368,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         Check::new(
             "misc.currency.redundant_pounds",
             "Do not use both pound sign and pounds.",
@@ -425,7 +375,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         Check::new(
             "misc.currency.redundant_euros",
             "Do not use both euro sign and euros.",
@@ -433,7 +382,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         // Scare quotes overuse
         Check::new(
             "misc.scare_quotes.so_called",
@@ -442,7 +390,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         // Illogic
         Check::new(
             "misc.illogic.close_proximity",
@@ -451,7 +398,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("proximity"),
-
         Check::new(
             "misc.illogic.exact_same",
             "exact same is redundant. Use same or exactly the same.",
@@ -459,14 +405,12 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("same"),
-
         Check::new(
             "misc.illogic.reason_why",
             "reason why can often be just reason or why.",
             r"reason why",
         )
         .with_severity(Severity::Suggestion),
-
         // Professions
         Check::new(
             "misc.professions.attorney",
@@ -475,7 +419,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         // Waxed/grew
         Check::new(
             "misc.waxed.waxed",
@@ -484,7 +427,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         // Whence
         Check::new(
             "misc.whence.from_whence",
@@ -493,7 +435,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("whence"),
-
         // Many a
         Check::new(
             "misc.many_a.singular",
@@ -502,7 +443,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         // Suddenly
         Check::new(
             "misc.suddenly.overuse",
@@ -511,7 +451,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         // Capitalization
         Check::new(
             "misc.capitalization.internet",
@@ -521,7 +460,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Suggestion)
         .with_replacement("internet"),
-
         Check::new(
             "misc.capitalization.web",
             "Web (meaning World Wide Web) is now typically lowercase: web.",
@@ -530,7 +468,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Suggestion)
         .with_replacement("the web"),
-
         // ===== Strunk & White composition rules (omit needless words) =====
         Check::new(
             "misc.composition.the_fact_that",
@@ -538,14 +475,12 @@ pub fn get_checks() -> Vec<Check> {
             r"the fact that",
         )
         .with_severity(Severity::Warning),
-
         Check::new(
             "misc.composition.who_is",
             "'who is' / 'which was' constructions can often be shortened.",
             r"(?:who|which) (?:is|was|were|are)",
         )
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.composition.the_question_as_to",
             "'the question as to whether' is wordy. Use 'whether'.",
@@ -553,7 +488,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("whether"),
-
         Check::new(
             "misc.composition.there_is_no_doubt",
             "'there is no doubt but that' is wordy. Use 'doubtless' or 'no doubt'.",
@@ -561,7 +495,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("no doubt"),
-
         Check::new(
             "misc.composition.used_for_fuel",
             "'used for fuel purposes' - 'purposes' is redundant.",
@@ -569,7 +502,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.composition.he_is_a_man",
             "'He is a man who' is wordy. Simplify.",
@@ -577,7 +509,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.composition.in_a_hasty_manner",
             "'in a [adjective] manner' is wordy. Use the adverb form.",
@@ -585,7 +516,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.composition.this_is_a_subject",
             "'this is a subject that' is wordy.",
@@ -593,7 +523,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.composition.her_story_is",
             "'Her story is a strange one' - simplify to 'Her story is strange'.",
@@ -601,7 +530,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.composition.the_reason_why",
             "'the reason why is that' is wordy. Use 'because'.",
@@ -609,7 +537,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("because"),
-
         Check::new(
             "misc.composition.owing_to",
             "'owing to the fact that' is wordy. Use 'because' or 'since'.",
@@ -617,7 +544,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("because"),
-
         Check::new(
             "misc.composition.in_spite_of",
             "'in spite of the fact that' is wordy. Use 'although' or 'though'.",
@@ -625,7 +551,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("although"),
-
         Check::new(
             "misc.composition.call_attention",
             "'call your attention to the fact that' is wordy. Use 'remind you' or 'notify you'.",
@@ -633,7 +558,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         Check::new(
             "misc.composition.i_was_unaware",
             "'I was unaware of the fact that' is wordy. Use 'I didn't know'.",
@@ -641,7 +565,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         Check::new(
             "misc.composition.the_fact_that_he",
             "'the fact that [subject] had not succeeded' is wordy. Use 'failure'.",
@@ -649,7 +572,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.composition.along_the_lines",
             "'along the lines of' is wordy. Use 'like'.",
@@ -657,7 +579,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("like"),
-
         Check::new(
             "misc.composition.as_to_whether",
             "'as to whether' is wordy. Use 'whether'.",
@@ -665,7 +586,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("whether"),
-
         Check::new(
             "misc.composition.as_yet",
             "'as yet' is wordy. Use 'yet'.",
@@ -673,7 +593,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("yet"),
-
         Check::new(
             "misc.composition.at_the_present_time",
             "'at the present time' is wordy. Use 'now' or 'currently'.",
@@ -681,7 +600,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("now"),
-
         Check::new(
             "misc.composition.by_means_of",
             "'by means of' is wordy. Use 'by' or 'with'.",
@@ -689,7 +607,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("by"),
-
         Check::new(
             "misc.composition.for_the_purpose_of",
             "'for the purpose of' is wordy. Use 'to' or 'for'.",
@@ -697,7 +614,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("to"),
-
         Check::new(
             "misc.composition.in_order_to",
             "'in order to' is often wordy. Consider using just 'to'.",
@@ -705,7 +621,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("to"),
-
         Check::new(
             "misc.composition.in_the_event_that",
             "'in the event that' is wordy. Use 'if'.",
@@ -713,7 +628,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("if"),
-
         Check::new(
             "misc.composition.with_regard_to",
             "'with regard to' / 'with respect to' is wordy. Use 'about' or 'regarding'.",
@@ -721,7 +635,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         // ===== Debased/bloated phrases =====
         Check::new(
             "misc.debased.at_this_point_in_time",
@@ -730,7 +643,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("now"),
-
         Check::new(
             "misc.debased.at_this_moment_in_time",
             "'at this moment in time' is bloated. Use 'now'.",
@@ -738,21 +650,18 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Warning)
         .with_replacement("now"),
-
         Check::new(
             "misc.debased.going_forward",
             "'going forward' is corporate jargon. Use 'in the future' or omit.",
             r"going forward",
         )
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.debased.paradigm_shift",
             "'paradigm shift' is overused jargon. Consider a simpler alternative.",
             r"paradigm shift",
         )
         .with_severity(Severity::Suggestion),
-
         // ===== Greylist (commonly overused words that may be warranted) =====
         Check::new(
             "misc.greylist.obviously",
@@ -761,7 +670,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.greylist.utilize",
             "'utilize' is often pretentious. Usually 'use' works just as well.",
@@ -770,7 +678,6 @@ pub fn get_checks() -> Vec<Check> {
         .raw()
         .with_severity(Severity::Suggestion)
         .with_replacement("use"),
-
         // ===== Institution names =====
         Check::new(
             "misc.institution_name.virginia_tech",
@@ -779,7 +686,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Suggestion)
         .with_replacement("Virginia Tech"),
-
         // ===== Narcissism (self-aggrandizing phrases) =====
         Check::new(
             "misc.narcissism.in_recent_years",
@@ -788,7 +694,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.narcissism.very_unique",
             "'very unique' - unique is absolute. Something is unique or it isn't.",
@@ -796,7 +701,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .with_severity(Severity::Error)
         .with_replacement("unique"),
-
         // ===== Legal phrasing =====
         Check::new(
             "misc.not_guilty.innocent_vs_not_guilty",
@@ -805,7 +709,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Warning),
-
         // ===== Tense consistency (tense_present.py patterns) =====
         Check::new(
             "misc.tense.had_had",
@@ -814,7 +717,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.tense.that_that",
             "'that that' may be grammatically correct but often reads awkwardly.",
@@ -822,7 +724,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Suggestion),
-
         Check::new(
             "misc.tense.is_is",
             "'is is' is likely an error.",
@@ -830,7 +731,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         Check::new(
             "misc.tense.the_the",
             "'the the' is likely an error.",
@@ -838,15 +738,9 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
-        Check::new(
-            "misc.tense.a_a",
-            "'a a' is likely an error.",
-            r"\ba a\b",
-        )
-        .raw()
-        .with_severity(Severity::Error),
-
+        Check::new("misc.tense.a_a", "'a a' is likely an error.", r"\ba a\b")
+            .raw()
+            .with_severity(Severity::Error),
         Check::new(
             "misc.tense.an_an",
             "'an an' is likely an error.",
@@ -854,7 +748,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         Check::new(
             "misc.tense.and_and",
             "'and and' is likely an error.",
@@ -862,7 +755,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         Check::new(
             "misc.tense.of_of",
             "'of of' is likely an error.",
@@ -870,7 +762,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         Check::new(
             "misc.tense.to_to",
             "'to to' is likely an error.",
@@ -878,7 +769,6 @@ pub fn get_checks() -> Vec<Check> {
         )
         .raw()
         .with_severity(Severity::Error),
-
         Check::new(
             "misc.tense.for_for",
             "'for for' is likely an error.",

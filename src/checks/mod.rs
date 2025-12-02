@@ -2,42 +2,55 @@
 //!
 //! Registers and exposes all available checks.
 
-pub mod typography;
-pub mod weasel_words;
-pub mod hedging;
-pub mod redundancy;
-pub mod cliches;
-pub mod misc;
-pub mod archaism;
 pub mod annotations;
+pub mod archaism;
+pub mod cliches;
 pub mod dates_times;
+pub mod hedging;
 pub mod industrial_language;
 pub mod lexical_illusions;
 pub mod malapropisms;
+pub mod misc;
 pub mod mixed_metaphors;
 pub mod mondegreens;
 pub mod needless_variants;
 pub mod nonwords;
 pub mod oxymorons;
+pub mod preferred_forms;
 pub mod psychology;
+pub mod redundancy;
 pub mod restricted;
 pub mod skunked_terms;
 pub mod social_awareness;
 pub mod spelling;
 pub mod terms;
+pub mod typography;
 pub mod uncomparables;
-pub mod preferred_forms;
+pub mod weasel_words;
 
 use crate::check::Check;
 
 // Cache the checks vector so we don't recreate it on every lint call
-static ALL_CHECKS: once_cell::sync::Lazy<Vec<Check>> = once_cell::sync::Lazy::new(|| {
-    build_all_checks()
-});
+static ALL_CHECKS: once_cell::sync::Lazy<Vec<Check>> =
+    once_cell::sync::Lazy::new(build_all_checks);
 
 /// Get all registered checks (cached)
 pub fn get_all_checks() -> &'static [Check] {
     &ALL_CHECKS
+}
+
+/// Validate all registered checks
+/// Returns a list of validation errors, or empty vector if all checks are valid
+pub fn validate_all_checks() -> Vec<String> {
+    let mut errors = Vec::new();
+
+    for check in get_all_checks() {
+        if let Err(e) = check.validate_regex() {
+            errors.push(e);
+        }
+    }
+
+    errors
 }
 
 /// Build all checks (called once during initialization)

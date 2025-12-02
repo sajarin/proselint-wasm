@@ -185,7 +185,10 @@ mod tests {
     #[test]
     fn test_am_morning() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "dates_times.am_morning").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "dates_times.am_morning")
+            .unwrap();
         let results = check.run("The meeting is at 8 AM in the morning.");
         assert_eq!(results.len(), 1);
     }
@@ -193,7 +196,10 @@ mod tests {
     #[test]
     fn test_point_in_time() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "dates_times.at_this_point_in_time").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "dates_times.at_this_point_in_time")
+            .unwrap();
         let results = check.run("At this point in time, we need to decide.");
         assert_eq!(results.len(), 1);
     }

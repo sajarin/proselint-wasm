@@ -2,10 +2,10 @@
 //!
 //! Uses Aho-Corasick for fast keyword pre-filtering before running expensive regexes.
 
-use crate::{LintResult, Config};
-use crate::position::{LineTracker, QuoteTracker};
+use crate::check::{get_cached_regex, Check, Severity};
 use crate::checks;
-use crate::check::{Check, Severity, get_cached_regex};
+use crate::position::{LineTracker, QuoteTracker};
+use crate::{Config, LintResult};
 use aho_corasick::AhoCorasick;
 use std::collections::HashSet;
 use std::sync::OnceLock;
@@ -30,7 +30,9 @@ fn extract_keyword(check: &Check) -> Option<String> {
 
     // Skip patterns with regex metacharacters that make keyword extraction unreliable
     // We want simple word/phrase patterns only
-    let metacharacters = ['[', ']', '(', ')', '{', '}', '|', '*', '+', '?', '^', '$', '.', '\\'];
+    let metacharacters = [
+        '[', ']', '(', ')', '{', '}', '|', '*', '+', '?', '^', '$', '.', '\\',
+    ];
 
     if pattern.chars().any(|c| metacharacters.contains(&c)) {
         return None;
@@ -50,7 +52,8 @@ fn build_ac_index() -> AcIndex {
     let all_checks = checks::get_all_checks();
 
     let mut keywords: Vec<String> = Vec::new();
-    let mut keyword_to_index: std::collections::HashMap<String, usize> = std::collections::HashMap::new();
+    let mut keyword_to_index: std::collections::HashMap<String, usize> =
+        std::collections::HashMap::new();
     let mut pattern_to_checks: Vec<Vec<usize>> = Vec::new();
     let mut pure_regex_checks: Vec<usize> = Vec::new();
 
@@ -152,11 +155,10 @@ pub fn lint_text(text: &str, config: &Config) -> Vec<LintResult> {
 
         for (start, end, replacement) in matches {
             // Skip matches inside quotes if check doesn't allow it
-            if !check.allow_quotes && !config.check_quotes {
-                if quote_tracker.overlaps_quote(start, end) {
+            if !check.allow_quotes && !config.check_quotes
+                && quote_tracker.overlaps_quote(start, end) {
                     continue;
                 }
-            }
 
             // Convert to line/column
             let (line, column) = line_tracker.offset_to_position(start);
@@ -180,10 +182,7 @@ pub fn lint_text(text: &str, config: &Config) -> Vec<LintResult> {
     }
 
     // Sort results by position
-    results.sort_by(|a, b| {
-        a.line.cmp(&b.line)
-            .then(a.column.cmp(&b.column))
-    });
+    results.sort_by(|a, b| a.line.cmp(&b.line).then(a.column.cmp(&b.column)));
 
     results
 }
@@ -257,9 +256,11 @@ mod tests {
     #[test]
     fn test_ac_index_build() {
         let index = get_ac_index();
-        println!("AC index: {} keywords, {} pure regex checks",
+        println!(
+            "AC index: {} keywords, {} pure regex checks",
             index.pattern_to_checks.len(),
-            index.pure_regex_checks.len());
+            index.pure_regex_checks.len()
+        );
     }
 
     #[test]

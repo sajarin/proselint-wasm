@@ -14,7 +14,6 @@ pub fn get_checks() -> Vec<Check> {
             r"very",
         )
         .with_severity(Severity::Warning),
-
         // "Really"
         Check::new(
             "weasel_words.really",
@@ -22,7 +21,6 @@ pub fn get_checks() -> Vec<Check> {
             r"really",
         )
         .with_severity(Severity::Warning),
-
         // "Quite"
         Check::new(
             "weasel_words.quite",
@@ -30,7 +28,6 @@ pub fn get_checks() -> Vec<Check> {
             r"quite",
         )
         .with_severity(Severity::Suggestion),
-
         // "Rather"
         Check::new(
             "weasel_words.rather",
@@ -38,7 +35,6 @@ pub fn get_checks() -> Vec<Check> {
             r"rather",
         )
         .with_severity(Severity::Suggestion),
-
         // "Somewhat"
         Check::new(
             "weasel_words.somewhat",
@@ -46,7 +42,6 @@ pub fn get_checks() -> Vec<Check> {
             r"somewhat",
         )
         .with_severity(Severity::Suggestion),
-
         // "Extremely"
         Check::new(
             "weasel_words.extremely",
@@ -54,7 +49,6 @@ pub fn get_checks() -> Vec<Check> {
             r"extremely",
         )
         .with_severity(Severity::Warning),
-
         // "Basically"
         Check::new(
             "weasel_words.basically",
@@ -62,7 +56,6 @@ pub fn get_checks() -> Vec<Check> {
             r"basically",
         )
         .with_severity(Severity::Warning),
-
         // "Actually"
         Check::new(
             "weasel_words.actually",
@@ -70,7 +63,6 @@ pub fn get_checks() -> Vec<Check> {
             r"actually",
         )
         .with_severity(Severity::Suggestion),
-
         // "Literally" (often misused)
         Check::new(
             "weasel_words.literally",
@@ -78,7 +70,6 @@ pub fn get_checks() -> Vec<Check> {
             r"literally",
         )
         .with_severity(Severity::Warning),
-
         // "Virtually"
         Check::new(
             "weasel_words.virtually",
@@ -86,7 +77,6 @@ pub fn get_checks() -> Vec<Check> {
             r"virtually",
         )
         .with_severity(Severity::Suggestion),
-
         // "Probably"
         Check::new(
             "weasel_words.probably",
@@ -94,7 +84,6 @@ pub fn get_checks() -> Vec<Check> {
             r"probably",
         )
         .with_severity(Severity::Suggestion),
-
         // "Perhaps"
         Check::new(
             "weasel_words.perhaps",
@@ -102,7 +91,6 @@ pub fn get_checks() -> Vec<Check> {
             r"perhaps",
         )
         .with_severity(Severity::Suggestion),
-
         // "Maybe"
         Check::new(
             "weasel_words.maybe",
@@ -110,7 +98,6 @@ pub fn get_checks() -> Vec<Check> {
             r"maybe",
         )
         .with_severity(Severity::Suggestion),
-
         // "Just" (minimizing)
         Check::new(
             "weasel_words.just",
@@ -118,7 +105,6 @@ pub fn get_checks() -> Vec<Check> {
             r"just",
         )
         .with_severity(Severity::Suggestion),
-
         // "Simply"
         Check::new(
             "weasel_words.simply",
@@ -150,7 +136,10 @@ mod tests {
     #[test]
     fn test_literally_check() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "weasel_words.literally").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "weasel_words.literally")
+            .unwrap();
 
         let results = check.run("I literally died laughing.");
         assert_eq!(results.len(), 1);

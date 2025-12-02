@@ -312,7 +312,10 @@ mod tests {
     #[test]
     fn test_mondegreen() {
         let checks = get_checks();
-        let check = checks.iter().find(|c| c.id == "mondegreens.doggy_dog_world").unwrap();
+        let check = checks
+            .iter()
+            .find(|c| c.id == "mondegreens.doggy_dog_world")
+            .unwrap();
         let results = check.run("It's a doggy dog world out there.");
         assert_eq!(results.len(), 1);
     }
